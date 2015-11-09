@@ -9,6 +9,10 @@
   <body>
     <div class="medium-12 columns">
       <g:pageProperty name="page.main"/>
+
+      <g:if test="${flash?.message}">
+        <div class="alert-box">${flash.message}</div>
+      </g:if>
     </div>
   </body>
 </html>

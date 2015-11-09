@@ -4,7 +4,8 @@
   </head>
 
   <content tag="main">
-    <g:link controller="control" class="btn btn-default">Regresar</g:link>
+    <g:link controller="control" class="button secondary">Regresar</g:link>
+    <g:link controller="${controllerName}" action="create" class="button right">Crear</g:link>
 
     <g:if test="${users}">
       <table role="grid" width="100%">
@@ -18,6 +19,7 @@
             <tr>
               <td>
                 <g:link action="show" id="${user.id}">${user.fullName}</g:link>
+                ${user.getAuthorities()}
               </td>
             </tr>
           </g:each>

@@ -57,6 +57,11 @@ class User implements Serializable {
 		}
 	}
 
+	def beforeValidate() {
+		username = email
+		password = "123456seven"
+	}
+
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
 	}
