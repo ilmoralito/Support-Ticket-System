@@ -13,7 +13,7 @@
             <input type="text" name="j_username" id="username" placeholder="Correo institucional"/>
             <input type="password" name="j_password" id="password" placeholder="Clave"/>
 
-            <input type="submit" id="submit" value="${message(code: "springSecurity.login.button")}" class="button"/>
+            <input type="submit" id="submit" value="${message(code: "springSecurity.login.button")}" class="button expand"/>
         </form>
 
         <g:if test="${flash.message}">
