@@ -1,5 +1,7 @@
 package ni.edu.uccleon.ticket
 
+import org.grails.databinding.BindUsing
+
 class User implements Serializable {
 
 	private static final long serialVersionUID = 1
@@ -7,15 +9,22 @@ class User implements Serializable {
 	transient springSecurityService
 
 	String username
+	@BindUsing({
+		obj, source -> source["fullName"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
+	})
+	String fullName
+	String email
 	String password
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
 
-	User(String username, String password) {
+	User(String username, String fullName, String email, String password) {
 		this()
 		this.username = username
+		this.fullName = fullName
+		this.email = email
 		this.password = password
 	}
 
@@ -56,6 +65,14 @@ class User implements Serializable {
 
 	static constraints = {
 		username blank: false, unique: true
+		fullName blank: false
+		email blank: false, unique: true, email: true, validator: { email ->
+			def emailTokenized = email.tokenize("@")
+
+			if (emailTokenized[0].tokenize(".").size() != 2 || emailTokenized[1] != "ucc.edu.ni") {
+				return "not.valid.email"
+			}
+		}
 		password blank: false
 	}
 
