@@ -6,6 +6,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class UserController {
 
     def index() {
-        render "hola"
+        [users: User.list()]
     }
 }

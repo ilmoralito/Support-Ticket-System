@@ -3,17 +3,41 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title><g:layoutTitle default="Grails"/></title>
+        <title><g:layoutTitle default="Support Ticket System"/></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet src="application.css"/>
-        <asset:javascript src="application.js"/>
-
+        <!--<asset:javascript src="application.js"/>-->
         <g:layoutHead/>
     </head>
     <body>
-        <div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
-        <g:layoutBody/>
-        <div class="footer" role="contentinfo"></div>
-        <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+        <sec:ifLoggedIn>
+            <div class="fixed">
+                <nav class="top-bar" data-topbar role="navigation">
+                     <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="#">Support Ticket System</a></h1>
+                        </li>
+                        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+                      </ul>
+
+                      <section class="top-bar-section">
+                        <ul class="right">
+                            <li class="has-dropdown">
+                                <a href="#"><sec:loggedInUserInfo field="username"/></a>
+                                <ul class="dropdown">
+                                    <sec:ifAllGranted roles="ROLE_ADMIN">
+                                        <li><g:link controller="user">Usuarios</g:link></li>
+                                    </sec:ifAllGranted>
+                                    <li><g:link controller="logout">Salir</g:link></li>
+                                </ul>
+                            </li>
+                        </ul>
+                      </section>
+                </nav>
+            </div>
+        </sec:ifLoggedIn>
+        <div class="row">
+            <g:layoutBody/>
+        </div>
     </body>
 </html>
