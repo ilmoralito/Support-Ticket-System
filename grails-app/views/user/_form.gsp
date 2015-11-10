@@ -8,10 +8,14 @@
 
 <h6>Roles</h6>
 <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
+    <g:set
+        var="shouldCheck"
+        value="${actionName == 'edit' ? ni.edu.uccleon.ticket.UserRole.exists(user.id, role.id) : params.list('roles')?.contains(role.authority)}"/>
+
     <g:checkBox
         name="roles"
         value="${role.authority}"
-        checked="${ni.edu.uccleon.ticket.UserRole.exists(user.id, role.id)}"/>
+        checked="${shouldCheck}"/>
     <label>${grailsApplication.config.ni.edu.uccleon.ticket.rolesNickname[role.authority]}</label>
 </g:each>
 <br>
