@@ -52,6 +52,10 @@ class User implements Serializable {
 	}
 
 	def beforeUpdate() {
+		if (isDirty("email")) {
+			username = email
+		}
+
 		if (isDirty('password')) {
 			encodePassword()
 		}

@@ -28,4 +28,12 @@ class UserService {
 
         data
     }
+
+    def addRoles(List roles, User user) {
+        roles.each { role ->
+            def roleInstance = Role.findByAuthority role
+
+            UserRole.create user, roleInstance, true
+        }
+    }
 }

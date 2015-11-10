@@ -18,7 +18,7 @@
                     <g:each in="${users}" var="user">
                         <tr>
                             <td>
-                                <g:link action="show" id="${user.id}">${user.fullName}</g:link>
+                                <g:link action="edit" id="${user.id}">${user.fullName}</g:link>
                             </td>
                         </tr>
                     </g:each>

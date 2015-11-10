@@ -1,8 +1,18 @@
 <g:textField name="fullName" value="${user?.fullName}" placeholder="Nombre completo"/>
 <g:textField name="email" value="${user?.email}" placeholder="Correo institucional"/>
 
+<g:if test="${actionName == 'edit'}">
+    <g:checkBox name="enabled" checked="${user?.enabled}"/>
+    <label>Habilitado</label>
+</g:if>
+
+<h6>Roles</h6>
 <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
-    <g:checkBox name="roles" value="${role}" checked="false"/>
-    <label>${role.authority == "ROLE_ADMIN" ? "Administrador" : "Usuario"}</label>
+    <g:checkBox
+        name="roles"
+        value="${role.authority}"
+        checked="${ni.edu.uccleon.ticket.UserRole.exists(user.id, role.id)}"/>
+    <label>${grailsApplication.config.ni.edu.uccleon.ticket.rolesNickname[role.authority]}</label>
 </g:each>
 <br>
+
