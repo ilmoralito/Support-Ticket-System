@@ -1,16 +1,27 @@
 package ni.edu.uccleon.ticket
 
 import grails.plugin.springsecurity.annotation.Secured
+import grails.core.GrailsApplication
 
 @Secured("ROLE_ADMIN")
 class UserController {
+    GrailsApplication grailsApplication
+    UserService userService
+
     static allowedMethods = [
-        index: "GET",
+        index: ["GET", "POST"],
         create: ["GET", "POST"]
     ]
 
     def index() {
-        [users: User.list()]
+        def roles = params.list("roles").collect { role -> Role.findByAuthority(role) }
+        def enabledStatus = params.list("enabledStatus")
+        def data = userService.filter roles, enabledStatus
+
+        [
+            users: (roles || enabledStatus) ? data : User.findAllByEnabled true,
+            rolesNickname: grailsApplication.config.ni.edu.uccleon.ticket.rolesNickname
+        ]
     }
 
     def create() {

@@ -16,3 +16,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/favicon.ico':  ['permitAll']
 ]
 
+// App configuration settings
+ni.edu.uccleon.ticket.rolesNickname = [
+	ROLE_ADMIN: "Administrador",
+	ROLE_USER: "Usuario"
+]

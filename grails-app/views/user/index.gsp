@@ -1,4 +1,4 @@
-<g:applyLayout name="oneColumn">
+<g:applyLayout name="twoColumns">
     <head>
         <title>Users</title>
     </head>
@@ -19,7 +19,6 @@
                         <tr>
                             <td>
                                 <g:link action="show" id="${user.id}">${user.fullName}</g:link>
-                                ${user.getAuthorities()}
                             </td>
                         </tr>
                     </g:each>
@@ -27,9 +26,38 @@
             </table>
         </g:if>
         <g:else>
-            <div class="alert-box info">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed quidem minima cum commodi, at magni numquam ipsa sunt delectus culpa quaerat tempora architecto porro, recusandae nihil alias reprehenderit neque accusantium.
-            </div>
+            <div class="alert-box info">Nada que mostrar</div>
         </g:else>
+    </content>
+    <content tag="sidebar">
+        <g:set var="check" value="${params?.enabledStatus || params?.roles}"/>
+
+        <g:form action="index" autocomplete="off">
+            <h6>Filtrar</h6>
+            <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
+                <g:checkBox
+                    name="roles"
+                    value="${role.authority}"
+                    checked="${params.list('roles').contains(role.authority)}"/>
+                <label>${rolesNickname[role.authority]}</label>
+                <br>
+            </g:each>
+
+            <h6>Estado</h6>
+            <g:checkBox
+                name="enabledStatus"
+                value="true"
+                checked="${check ? params.list('enabledStatus').contains('true') : true}"/>
+            <label>Habilitado</label>
+            <br>
+
+            <g:checkBox
+                name="enabledStatus"
+                value="false"
+                checked="${params.list('enabledStatus').contains('false')}"/>
+            <label>Desabilitado</label>
+
+            <g:submitButton name="send" value="Filrar" class="button expand"/>
+        </g:form>
     </content>
 </g:applyLayout>
