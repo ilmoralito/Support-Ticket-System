@@ -14,10 +14,10 @@
         </g:form>
 
         <h6>Cambiar clave</h6>
-        <g:form action="password" autocomplete="off">
+        <g:form action="updatePassword" autocomplete="off">
           <g:passwordField name="currentPassword" placeholder="Clave actual"/>
           <g:passwordField name="newPassword" placeholder="Nueva clave"/>
-          <g:passwordField name="repeitNewPassword" placeholder="Repetir nueva clave"/>
+          <g:passwordField name="repeatNewPassword" placeholder="Repetir nueva clave"/>
 
           <g:submitButton name="send" value="Confirmar" class="button"/>
         </g:form>

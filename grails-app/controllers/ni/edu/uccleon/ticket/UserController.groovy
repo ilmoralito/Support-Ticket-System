@@ -14,7 +14,8 @@ class UserController {
         create: ["GET", "POST"],
         edit: "GET",
         update: "POST",
-        profile: ["GET", "POST"]
+        profile: ["GET", "POST"],
+        updatePassword: "POST"
     ]
 
     def index() {
@@ -97,4 +98,45 @@ class UserController {
 
         [user: user]
     }
+
+    def updatePassword(UpdatePasswordCommand cmd) {
+        def user = springSecurityService.currentUser
+
+        if (cmd.hasErrors()) {
+           flash.message = "Datos para actualizar clave incorrectos"
+
+           redirect action: "profile"
+           return
+        }
+
+        user.properties["password"] = cmd.newPassword
+
+        if (!user.save(flush: true)) {
+            user.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]" }
+        }
+
+        flash.message = "Clave actualizada"
+        redirect action: "profile"
+    }
+}
+
+class UpdatePasswordCommand {
+  def springSecurityService
+  def passwordEncoder
+
+  String currentPassword
+  String newPassword
+  String repeatNewPassword
+
+  static constraints = {
+    currentPassword blank:false, validator:{ val, obj ->
+      def currentUser = obj.springSecurityService.currentUser
+      def currentUserPassword = currentUser.password
+
+      return obj.passwordEncoder.isPasswordValid(currentUserPassword, val, null)
+    }
+    newPassword validator:{ newPassword, obj ->
+      newPassword == obj.repeatNewPassword
+    }
+  }
 }
