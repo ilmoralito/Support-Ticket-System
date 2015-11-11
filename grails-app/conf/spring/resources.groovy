@@ -1,3 +1,5 @@
-// Place your Spring DSL code here
+import ni.edu.uccleon.ticket.MyUserDetailsService
+
 beans = {
+    userDetailsService(MyUserDetailsService)
 }

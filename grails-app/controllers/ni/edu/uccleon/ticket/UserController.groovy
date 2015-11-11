@@ -7,12 +7,14 @@ import grails.core.GrailsApplication
 class UserController {
     GrailsApplication grailsApplication
     UserService userService
+    def springSecurityService
 
     static allowedMethods = [
         index: ["GET", "POST"],
         create: ["GET", "POST"],
         edit: "GET",
-        update: "POST"
+        update: "POST",
+        profile: ["GET", "POST"]
     ]
 
     def index() {
@@ -79,5 +81,20 @@ class UserController {
         flash.message = !user?.save() ? "A ocurrido un error. Verifica los datos" : "Edicion correcta"
 
         redirect action: "edit", id: user.id
+    }
+
+    def profile() {
+        def user = springSecurityService.currentUser
+
+        if (request.method == "POST") {
+            user.properties["fullName"] = params
+
+            user.save()
+            springSecurityService.reauthenticate user.username
+
+            flash.message = "El usuario fue actualizado"
+        }
+
+        [user: user]
     }
 }
