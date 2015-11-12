@@ -83,9 +83,17 @@ class User implements Serializable {
 			}
 		}
 		password blank: false
+		departments validator: { departments ->
+			if (!departments?.size()) {
+				"notValid"
+			}
+		}
 	}
 
 	static mapping = {
 		password column: '`password`'
 	}
+
+	List departments
+	static hasMany = [departments: String]
 }

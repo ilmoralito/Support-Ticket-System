@@ -2,6 +2,8 @@ package ni.edu.uccleon.ticket
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.core.GrailsApplication
+import grails.plugins.rest.client.RestBuilder
+
 
 @Secured("ROLE_ADMIN")
 class UserController {
@@ -30,15 +32,22 @@ class UserController {
     }
 
     def create() {
+        def rest = new RestBuilder()
+        def resp = rest.get("http://localhost:9090/departments")
+
         if (request.method == "POST") {
             def roles = params.list("roles")
 
             if (roles) {
-                def user = new User(params)
+                def user = new User(
+                    fullName: params?.fullName,
+                    email: params?.email,
+                    departments: params.list("departments")
+                )
 
                 if (!user.save()) {
                     user.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
-                    return [user: user]
+                    return [user: user, departments: resp.json]
                 }
 
                 userService.addRoles roles, user
@@ -47,10 +56,9 @@ class UserController {
             } else {
                 flash.message = "Selecciona al menos un rol"
             }
-
-            //TODO: why do i need to redirect?
-            redirect action: "create"
         }
+
+        [departments: resp.json]
     }
 
     def edit(User user) {

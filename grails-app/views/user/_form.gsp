@@ -6,6 +6,17 @@
     <label>Habilitado</label>
 </g:if>
 
+<h6>Departamentos</h6>
+<g:each in="${departments}" var="department">
+    <div>
+        <g:checkBox
+            name="departments"
+            value="${department.name}"
+            checked="${params.list('departments').contains(department.name)}"/>
+        <label>${department.name}</label>
+    </div>
+</g:each>
+
 <h6>Roles</h6>
 <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
     <g:set
