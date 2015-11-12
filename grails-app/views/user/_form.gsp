@@ -12,7 +12,7 @@
         <g:checkBox
             name="departments"
             value="${department.name}"
-            checked="${params.list('departments').contains(department.name)}"/>
+            checked="${actionName == 'edit' ? user?.departments?.contains(department.name) : params.list('departments').contains(department.name)}"/>
         <label>${department.name}</label>
     </div>
 </g:each>

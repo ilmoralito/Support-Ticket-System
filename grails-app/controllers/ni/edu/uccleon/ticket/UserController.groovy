@@ -62,11 +62,14 @@ class UserController {
     }
 
     def edit(User user) {
+        def rest = new RestBuilder()
+        def resp = rest.get("http://localhost:9090/departments")
+
         if (!user) {
             response.sendError 404
         }
 
-        [user: user]
+        [user: user, departments: resp.json]
     }
 
     def update(User user) {
@@ -77,6 +80,7 @@ class UserController {
         //users
         user.fullName = params?.fullName
         user.email = params?.email
+        user.departments = params.list("departments")
         user.enabled = params.boolean("enabled") ?: false
 
         //roles
