@@ -24,7 +24,7 @@ class BootStrap {
 		def userUser = new User(
 			fullName: "Fulano de Tal",
 			email: "fulano.tal@ucc.edu.ni",
-			departments: resp.json[2].name
+			departments: [resp.json[2].name, resp.json[3].name]
 		).save failOnError: true
 
 		def testUser = new User(
@@ -42,6 +42,13 @@ class BootStrap {
 		assert User.count() == 4
 		assert Role.count() == 2
 		assert UserRole.count() == 4
+
+		// assistence
+		def assistance1 = new Assistance (
+			user: userUser,
+			department: userUser.departments[0],
+			description: "Lorem ipsum dolor sit ament",
+		).save failOnError: true
 	}
 	def destroy = {
 	}

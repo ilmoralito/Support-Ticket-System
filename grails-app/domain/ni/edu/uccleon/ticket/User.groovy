@@ -95,5 +95,6 @@ class User implements Serializable {
 	}
 
 	List departments
-	static hasMany = [departments: String]
+	List assistances
+	static hasMany = [departments: String, assistances: Assistance]
 }
