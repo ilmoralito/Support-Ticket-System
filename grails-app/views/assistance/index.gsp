@@ -52,21 +52,10 @@
             <g:textField name="toDateCreated" value="${params?.toDateCreated}" placeholder="Hasta"/>
 
             <g:if test="${'ROLE_ADMIN' in authorities}">
-                <h6>Departamentos</h6>
-                <div>
-                    <g:each in="${departments}" var="d">
-                        <div>
-                            <g:checkBox
-                                name="departments"
-                                value="${d.name}"
-                                checked="${d.name in params.list('departments')}"/>
-                            <label>${d.name}</label>
-                        </div>
-                    </g:each>
-                </div>
+                <ticket:renderDepartments/>
             </g:if>
 
-            <h6>Atendidos por</h6>
+            <h5>Atendidos por</h5>
             <g:each in="${adminUsers}" var="u">
                 <div>
                     <g:checkBox name="users" value="u.id" checked="false"/>
