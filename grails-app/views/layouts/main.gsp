@@ -22,13 +22,22 @@
 
                       <section class="top-bar-section">
                         <ul class="right">
+                            <li class="${controllerName == 'assistance' ? 'active' : ''}">
+                                <g:link controller="assistance">
+                                    Asistencia
+                                </g:link>
+                            </li>
                             <li class="has-dropdown">
                                 <a href="#"><sec:loggedInUserInfo field="fullName"/></a>
                                 <ul class="dropdown">
                                     <sec:ifAllGranted roles="ROLE_ADMIN">
-                                        <li><g:link controller="user">Usuarios</g:link></li>
+                                        <li class="${controllerName == 'user' && actionName == 'index' ? 'active' : ''}">
+                                            <g:link controller="user">Usuarios</g:link>
+                                        </li>
                                     </sec:ifAllGranted>
-                                    <li><g:link controller="user" action="profile">Perfil</g:link></li>
+                                    <li class="${actionName == 'profile' ? 'active' : ''}">
+                                        <g:link controller="user" action="profile">Perfil</g:link>
+                                    </li>
                                     <li><g:link controller="logout">Salir</g:link></li>
                                 </ul>
                             </li>
