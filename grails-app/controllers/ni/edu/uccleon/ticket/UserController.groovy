@@ -93,6 +93,7 @@ class UserController {
         redirect action: "edit", id: user.id
     }
 
+    @Secured(["ROLE_ADMIN", "ROLE_USER"])
     def profile() {
         def user = springSecurityService.currentUser
 
