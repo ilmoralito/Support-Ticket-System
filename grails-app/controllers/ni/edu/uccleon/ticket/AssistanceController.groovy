@@ -9,7 +9,9 @@ class AssistanceController {
     static allowedMethods = [
         index: "GET",
         create: ["GET", "POST"],
-        edit: "GET"
+        edit: "GET",
+        update: "POST",
+        delete: "GET"
     ]
 
     def index() {
@@ -65,5 +67,21 @@ class AssistanceController {
         }
 
         redirect action: "edit", params: [id: id]
+    }
+
+    def delete(Integer id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        if (!assistance?.attendedBy) {
+            assistance.delete()
+
+            flash.message = "Solicitud eliminada"
+        }
+
+        redirect action: "index"
     }
 }
