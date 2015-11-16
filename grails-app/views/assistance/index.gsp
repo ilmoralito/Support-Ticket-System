@@ -28,7 +28,7 @@
                     <g:each in="${assistances}" var="a">
                         <tr>
                             <td style="text-align: center;">
-                                <g:link action="show" id="${a.id}">${a.id}</g:link>
+                                <g:link action="edit" id="${a.id}">${a.id}</g:link>
                             </td>
                             <td>${a.description}</td>
                             <td>

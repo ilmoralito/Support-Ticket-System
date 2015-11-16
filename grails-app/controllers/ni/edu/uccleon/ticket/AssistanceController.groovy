@@ -8,7 +8,8 @@ class AssistanceController {
 
     static allowedMethods = [
         index: "GET",
-        create: ["GET", "POST"]
+        create: ["GET", "POST"],
+        edit: "GET"
     ]
 
     def index() {
@@ -25,7 +26,6 @@ class AssistanceController {
     def create() {
         if (request.method == "POST") {
             def user = springSecurityService.currentUser
-
             def assistance = new Assistance(params)
 
             user.addToAssistances assistance
@@ -36,8 +36,34 @@ class AssistanceController {
             }
 
             flash.message = "Creada ticket de mantenimiento"
-
             redirect action: "index"
         }
+    }
+
+    def edit(Integer id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        [assistance: assistance]
+    }
+
+    def update(Integer id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        assistance.properties["description"] = params
+
+        if (!assistance.save()) {
+            assistance.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]" }
+            flash.message = "A ocurrido un error. Verificar datos"
+        }
+
+        redirect action: "edit", params: [id: id]
     }
 }
