@@ -43,12 +43,14 @@ class BootStrap {
 		assert Role.count() == 2
 		assert UserRole.count() == 4
 
-		// assistence
-		def assistance1 = new Assistance (
-			user: userUser,
-			department: userUser.departments[0],
-			description: "Lorem ipsum dolor sit ament",
-		).save failOnError: true
+		// assistance
+		def assistance1 = new Assistance(
+			description: "Lorem ipsum dolor sip ament"
+		)
+
+		userUser.addToAssistances assistance1
+
+		assistance1.save failOnError: true
 	}
 	def destroy = {
 	}

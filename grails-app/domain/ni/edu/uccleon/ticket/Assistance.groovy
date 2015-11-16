@@ -1,7 +1,6 @@
 package ni.edu.uccleon.ticket
 
 class Assistance {
-    String department
     String description
     User attendedBy
     Date dateCompleted
@@ -10,7 +9,6 @@ class Assistance {
     Date lastUpdated
 
     static constraints = {
-        department blank: false
         description blank: false, maxSize: 140
         attendedBy nullable: true, validator: { attendedBy->
             attendedBy?.authorities?.authority?.contains("ROLE_ADMIN")
