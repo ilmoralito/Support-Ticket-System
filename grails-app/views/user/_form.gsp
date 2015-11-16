@@ -6,18 +6,7 @@
     <label>Habilitado</label>
 </g:if>
 
-<h6>Departamentos</h6>
-<g:each in="${departments}" var="department">
-    <div>
-        <g:checkBox
-            name="departments"
-            value="${department.name}"
-            checked="${actionName == 'edit' ? user?.departments?.contains(department.name) : params.list('departments').contains(department.name)}"/>
-        <label>${department.name}</label>
-    </div>
-</g:each>
-
-<h6>Roles</h6>
+<h5>Roles</h5>
 <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
     <g:set
         var="shouldCheck"
@@ -29,5 +18,5 @@
         checked="${shouldCheck}"/>
     <label>${grailsApplication.config.ni.edu.uccleon.ticket.rolesNickname[role.authority]}</label>
 </g:each>
-<br>
 
+<ticket:renderDepartments/>

@@ -2,7 +2,6 @@ package ni.edu.uccleon.ticket
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.core.GrailsApplication
-import grails.plugins.rest.client.RestBuilder
 
 
 @Secured("ROLE_ADMIN")
@@ -32,9 +31,6 @@ class UserController {
     }
 
     def create() {
-        def rest = new RestBuilder()
-        def resp = rest.get("http://localhost:9090/departments")
-
         if (request.method == "POST") {
             def roles = params.list("roles")
 
@@ -47,29 +43,26 @@ class UserController {
 
                 if (!user.save()) {
                     user.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
-                    return [user: user, departments: resp.json]
+                    return [user: user]
                 }
 
                 userService.addRoles roles, user
 
-                flash.message = "Agregado correctament"
+                flash.message = "Agregado correctamente"
             } else {
                 flash.message = "Selecciona al menos un rol"
             }
-        }
 
-        [departments: resp.json]
+            redirect action: "create"
+        }
     }
 
     def edit(User user) {
-        def rest = new RestBuilder()
-        def resp = rest.get("http://localhost:9090/departments")
-
         if (!user) {
             response.sendError 404
         }
 
-        [user: user, departments: resp.json]
+        [user: user]
     }
 
     def update(User user) {
@@ -83,15 +76,19 @@ class UserController {
         user.departments = params.list("departments")
         user.enabled = params.boolean("enabled") ?: false
 
+        if (!user.save()) {
+            flash.message = "A ocurrido un error. Verifica los datos"
+            redirect action: "edit", id: user.id
+            return
+        }
+
         //roles
         def roles = params.list("roles")
         if (roles) {
             UserRole.removeAll user, true
+            userService.addRoles roles, user
         }
 
-        userService.addRoles roles, user
-
-        flash.message = !user?.save() ? "A ocurrido un error. Verifica los datos" : "Edicion correcta"
 
         redirect action: "edit", id: user.id
     }
