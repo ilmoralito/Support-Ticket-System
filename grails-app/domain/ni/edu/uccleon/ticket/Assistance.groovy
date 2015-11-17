@@ -1,8 +1,6 @@
 package ni.edu.uccleon.ticket
 
 class Assistance {
-    def springSecurityService
-
     String description
     User attendedBy
     Date dateCompleted
@@ -27,10 +25,8 @@ class Assistance {
     }
 
     static namedQueries = {
-        byCurrentUser { currentUser ->
-            //def currentUser = this.springSecurityService.currentUser
-
-            eq "user", currentUser
+        byCurrentUser {
+            eq "user", domainClass.application.mainContext.springSecurityService.currentUser
         }
 
         notAttended {

@@ -19,7 +19,7 @@ class AssistanceController {
         def authorities = user.authorities.authority
 
         [
-            assistances: Assistance.byCurrentUser(user).notAttended.list(),
+            assistances: Assistance.byCurrentUser().notAttended.list(),
             adminUsers: UserRole.findAllByRole(Role.findByAuthority("ROLE_ADMIN")).user,
             authorities: authorities
         ]
