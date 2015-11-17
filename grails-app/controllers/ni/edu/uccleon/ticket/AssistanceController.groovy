@@ -7,7 +7,7 @@ class AssistanceController {
     def springSecurityService
 
     static allowedMethods = [
-        index: "GET",
+        index: ["GET", "POST"],
         create: ["GET", "POST"],
         edit: "GET",
         update: "POST",
@@ -16,12 +16,14 @@ class AssistanceController {
 
     def index() {
         def user = springSecurityService.currentUser
-        def authorities = user.authorities.authority
+
+        if (request.method == "POST") {
+            
+        }
 
         [
             assistances: Assistance.byCurrentUser().notAttended.list(),
-            adminUsers: UserRole.findAllByRole(Role.findByAuthority("ROLE_ADMIN")).user,
-            authorities: authorities
+            user: user
         ]
     }
 

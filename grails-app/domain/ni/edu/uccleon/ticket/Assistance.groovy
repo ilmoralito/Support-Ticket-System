@@ -3,6 +3,7 @@ package ni.edu.uccleon.ticket
 class Assistance {
     String description
     User attendedBy
+    String state = "PENDING"
     Date dateCompleted
 
     Date dateCreated
@@ -13,6 +14,7 @@ class Assistance {
         attendedBy nullable: true, validator: { attendedBy->
             attendedBy?.authorities?.authority?.contains("ROLE_ADMIN")
         }
+        state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
         dateCompleted nullable: true, validator: { dateCompleted ->
             if (dateCompleted) {
                 dateCompleted >= new Date()
@@ -35,6 +37,16 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
+
+    def beforeUpdate() {
+        if (attendedBy && dateCompleted) {
+            state = "CLOSED"
+        }
+
+        if (attendedBy) {
+            state = "PROCESS"
+        }
+    }
 
     String toString() { "$user.fullName in $user.departments" }
 }

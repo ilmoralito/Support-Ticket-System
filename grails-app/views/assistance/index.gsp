@@ -31,9 +31,7 @@
                                 <g:link action="edit" id="${a.id}">${a.id}</g:link>
                             </td>
                             <td>${a.description}</td>
-                            <td>
-                                <ticket:state attendedBy="${a?.attendedBy}" dateCompleted="${a?.dateCompleted}"/>
-                            </td>
+                            <td><ticket:state state="${a.state}"/></td>
                             <td>${a.lastUpdated.format("yyyy-MM-dd")}</td>
                         </tr>
                     </g:each>
@@ -45,23 +43,37 @@
         </g:else>
     </content>
     <content tag="sidebar">
-        <h5>Filtrar</h5>
         <g:form action="index" autocomplete="off">
-            <h6>Fecha de creacion</h6>
+            <h6>Creado</h6>
             <g:textField name="fromDateCreated" value="${params?.fromDateCreated}" placeholder="Desde"/>
             <g:textField name="toDateCreated" value="${params?.toDateCreated}" placeholder="Hasta"/>
 
-            <g:if test="${'ROLE_ADMIN' in authorities}">
-                <ticket:renderDepartments/>
-            </g:if>
-
-            <h5>Atendidos por</h5>
-            <g:each in="${adminUsers}" var="u">
+            <h6>Atendidos por</h6>
+            <g:each in="${ni.edu.uccleon.ticket.UserRole.findAllByRole(ni.edu.uccleon.ticket.Role.findByAuthority('ROLE_ADMIN')).user}" var="u">
                 <div>
-                    <g:checkBox name="users" value="u.id" checked="false"/>
+                    <g:checkBox
+                        name="attendedBy"
+                        value="${u.id}"
+                        checked="${params.list('attendedBy').contains(u.id)}"/>
                     <label>${u.fullName}</label>
                 </div>
             </g:each>
+
+            <h6>Estado</h6>
+            <div>
+                <g:checkBox name="state" value="pending" checked="${'pending' in params.list('state')}"/>
+                <label>Pendiente</label>
+            </div>
+
+            <div>
+                <g:checkBox name="state" value="attanded" checked="${'attanded' in params.list('state')}"/>
+                <label>Atendido</label>
+            </div>
+
+            <div>
+                <g:checkBox name="state" value="closed" checked="${'closed' in params.list('state')}"/>
+                <label>Cerrado</label>
+            </div>
 
             <g:submitButton name="send" value="Filtrar" class="button expand"/>
         </g:form>

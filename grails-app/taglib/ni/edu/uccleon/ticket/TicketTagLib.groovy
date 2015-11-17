@@ -8,15 +8,16 @@ class TicketTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def state = { attrs ->
-        def attendedBy = attrs?.attendedBy
-        def dateCompleted = attendedBy?.dateCompleted
-
-        if (attendedBy && dateCompleted) {
-            out << "Cerrado"
-        } else if (attendedBy) {
-            out << "Atendiendo"
-        } else if (!attendedBy) {
-            out << "Sin atender"
+        switch(attrs.state) {
+            case "PENDING":
+                out << "Pendiente"
+            break
+            case "PROCESS":
+                out << "Proceso"
+            break
+            case "CLOSED":
+                out << "Cerrado"
+            break
         }
     }
 
