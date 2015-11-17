@@ -51,6 +51,24 @@ class BootStrap {
 		userUser.addToAssistances assistance1
 
 		assistance1.save failOnError: true
+
+		def assistance2 = new Assistance(
+			description: "Blah bla bla yakiris markiris"
+		)
+
+		userUser.addToAssistances assistance2
+
+		assistance2.save failOnError: true
+
+		def assistance3 = new Assistance(
+			description: "grails_plugin_springsecurity_successHandler_defaultTargetUrl"
+		)
+
+		userUser.addToAssistances assistance3
+
+		assistance3.save failOnError: true
+
+		assert Assistance.count() == 3
 	}
 	def destroy = {
 	}

@@ -12,8 +12,8 @@
             <table role="grid" width="100%">
                 <colgroup>
                    <col span="1" style="width: 5%;">
-                   <col span="1" style="width: 75%;">
-                   <col span="1" style="width: 10%;">
+                   <col span="1" style="width: 70%;">
+                   <col span="1" style="width: 15%;">
                    <col span="1" style="width: 10%;">
                </colgroup>
                 <thead>
@@ -21,7 +21,7 @@
                         <th style="text-align: center;">#</th>
                         <th>ASUNTO</th>
                         <th>ESTADO</th>
-                        <th>ULTIMA ACTUALIZACION</th>
+                        <th>ACTUALIZACION</th>
                     </tr>
                 </thead>
                 <tbody>
