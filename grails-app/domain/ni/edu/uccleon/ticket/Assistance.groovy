@@ -34,6 +34,16 @@ class Assistance {
         notAttended {
             isNull "attendedBy"
         }
+
+        filter { state, attendedBy ->
+            if (state) {
+                "in" "state", state
+            }
+
+            if (attendedBy) {
+                "in" "attendedBy", attendedBy
+            }
+        }
     }
 
     static belongsTo = [user: User]

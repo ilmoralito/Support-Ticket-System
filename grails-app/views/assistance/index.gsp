@@ -44,34 +44,30 @@
     </content>
     <content tag="sidebar">
         <g:form action="index" autocomplete="off">
-            <h6>Creado</h6>
-            <g:textField name="fromDateCreated" value="${params?.fromDateCreated}" placeholder="Desde"/>
-            <g:textField name="toDateCreated" value="${params?.toDateCreated}" placeholder="Hasta"/>
-
             <h6>Atendidos por</h6>
             <g:each in="${ni.edu.uccleon.ticket.UserRole.findAllByRole(ni.edu.uccleon.ticket.Role.findByAuthority('ROLE_ADMIN')).user}" var="u">
                 <div>
                     <g:checkBox
                         name="attendedBy"
                         value="${u.id}"
-                        checked="${params.list('attendedBy').contains(u.id)}"/>
+                        checked="${params.list('attendedBy').contains(u.id.toString())}"/>
                     <label>${u.fullName}</label>
                 </div>
             </g:each>
 
             <h6>Estado</h6>
             <div>
-                <g:checkBox name="state" value="pending" checked="${'pending' in params.list('state')}"/>
+                <g:checkBox name="state" value="PENDING" checked="${'PENDING' in params.list('state')}"/>
                 <label>Pendiente</label>
             </div>
 
             <div>
-                <g:checkBox name="state" value="attanded" checked="${'attanded' in params.list('state')}"/>
-                <label>Atendido</label>
+                <g:checkBox name="state" value="PROCESS" checked="${'PROCESS' in params.list('state')}"/>
+                <label>Proceso</label>
             </div>
 
             <div>
-                <g:checkBox name="state" value="closed" checked="${'closed' in params.list('state')}"/>
+                <g:checkBox name="state" value="CLOSED" checked="${'CLOSED' in params.list('state')}"/>
                 <label>Cerrado</label>
             </div>
 

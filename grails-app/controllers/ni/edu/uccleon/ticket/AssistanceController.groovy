@@ -17,12 +17,19 @@ class AssistanceController {
     def index() {
         def user = springSecurityService.currentUser
 
-        if (request.method == "POST") {
-            
+        def assistances = {
+            if (request.method == "POST") {
+                def state = params.list("state")
+                def attendedBy = params.list("attendedBy").collect { User.get it }
+
+                Assistance.byCurrentUser().filter(state, attendedBy).list()
+            } else {
+                Assistance.byCurrentUser().notAttended.list()
+            }
         }
 
         [
-            assistances: Assistance.byCurrentUser().notAttended.list(),
+            assistances: assistances(),
             user: user
         ]
     }
