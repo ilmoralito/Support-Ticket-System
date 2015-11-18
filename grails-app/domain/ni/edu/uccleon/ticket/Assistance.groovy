@@ -31,8 +31,8 @@ class Assistance {
             eq "user", domainClass.application.mainContext.springSecurityService.currentUser
         }
 
-        notAttended {
-            isNull "attendedBy"
+        inState { state ->
+            eq "state", state
         }
 
         filter { state, attendedBy ->
