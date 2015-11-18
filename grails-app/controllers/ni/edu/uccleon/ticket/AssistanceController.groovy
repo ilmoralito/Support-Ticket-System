@@ -11,7 +11,8 @@ class AssistanceController {
         create: ["GET", "POST"],
         edit: "GET",
         update: "POST",
-        delete: "GET"
+        delete: "GET",
+        application: ["GET", "POST"]
     ]
 
     def index() {
@@ -92,5 +93,10 @@ class AssistanceController {
         }
 
         redirect action: "index"
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def application() {
+
     }
 }

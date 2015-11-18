@@ -22,10 +22,16 @@
 
                       <section class="top-bar-section">
                         <ul class="right">
-                            <li class="${controllerName == 'assistance' ? 'active' : ''}">
-                                <g:link controller="assistance">
-                                    Asistencia
-                                </g:link>
+                            <sec:ifAllGranted roles="ROLE_ADMIN">
+                                <li class="${controllerName == 'assistance' && actionName in ['application'] ? 'active' : ''}">
+                                    <g:link controller="assistance" action="application">
+                                        Solicitudes
+                                        <span class="label alert">#</span>
+                                    </g:link>
+                                </li>
+                            </sec:ifAllGranted>
+                            <li class="${controllerName == 'assistance' && !(actionName in ['application'])  ? 'active' : ''}">
+                                <g:link controller="assistance">Asistencias</g:link>
                             </li>
                             <li class="has-dropdown">
                                 <a href="#"><sec:loggedInUserInfo field="fullName"/></a>
