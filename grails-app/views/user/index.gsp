@@ -4,7 +4,6 @@
     </head>
 
     <content tag="main">
-        <g:link controller="control" class="button secondary">Regresar</g:link>
         <g:link controller="${controllerName}" action="create" class="button right">Crear</g:link>
 
         <g:if test="${users}">
