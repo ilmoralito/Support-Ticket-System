@@ -32,8 +32,12 @@ class Assistance {
             eq "user", domainClass.application.mainContext.springSecurityService.currentUser
         }
 
-        inState { state ->
-            eq "state", state
+        inState { states ->
+            if (states instanceof List) {
+                "in" "state", states
+            } else {
+                eq "state", states
+            }
         }
 
         filter { state, attendedBy ->
