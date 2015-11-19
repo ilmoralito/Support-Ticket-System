@@ -8,17 +8,9 @@ class TicketTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def state = { attrs ->
-        switch(attrs.state) {
-            case "PENDING":
-                out << "Pendiente"
-            break
-            case "PROCESS":
-                out << "Proceso"
-            break
-            case "CLOSED":
-                out << "Cerrado"
-            break
-        }
+        def states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
+
+        out << states[attrs.state]
     }
 
     def renderDepartments = { attrs, body ->
