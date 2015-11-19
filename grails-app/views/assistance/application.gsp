@@ -52,6 +52,8 @@
     <content tag="sidebar">
         <g:form action="application" autocomplete="off">
             <h5>Filtros</h5>
+            <ticket:usersByRole role="ROLE_ADMIN"/>
+
             <g:render template="filterForm"/>
 
             <ticket:renderDepartments/>

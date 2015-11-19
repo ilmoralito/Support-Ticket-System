@@ -36,4 +36,8 @@ class UserService {
             UserRole.create user, roleInstance, true
         }
     }
+
+    def getUsersByRole(String role) {
+        User.list().findAll { user -> user.authorities.authority.contains(role) }
+    }
 }

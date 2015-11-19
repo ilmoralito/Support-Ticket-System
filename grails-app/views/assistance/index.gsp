@@ -44,6 +44,8 @@
     </content>
     <content tag="sidebar">
         <g:form action="index" autocomplete="off">
+            <ticket:usersByRole role="ROLE_ADMIN"/>
+
             <g:render template="filterForm"/>
 
             <g:submitButton name="send" value="Filtrar" class="button expand"/>

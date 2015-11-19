@@ -3,6 +3,7 @@ package ni.edu.uccleon.ticket
 import grails.plugins.rest.client.RestBuilder
 
 class TicketTagLib {
+    def userService
     static namespace = "ticket"
     //static defaultEncodeAs = [taglib:'html']
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
@@ -21,5 +22,10 @@ class TicketTagLib {
         }
 
         out << render(template: "/templates/departments", model: [departments: data])
+    }
+
+    def usersByRole = { attrs ->
+        def users = userService.getUsersByRole(attrs.role)
+        out << render(template: "/templates/usersByRole", model: [users: users])
     }
 }

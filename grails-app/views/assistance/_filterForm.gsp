@@ -1,14 +1,3 @@
-<h6>Atendidos por</h6>
-<g:each in="${ni.edu.uccleon.ticket.UserRole.findAllByRole(ni.edu.uccleon.ticket.Role.findByAuthority('ROLE_ADMIN')).user}" var="u">
-    <div>
-        <g:checkBox
-            name="attendedBy"
-            value="${u.id}"
-            checked="${params.list('attendedBy').contains(u.id.toString())}"/>
-        <label>${u.fullName}</label>
-    </div>
-</g:each>
-
 <h6>Estado</h6>
 <div>
     <g:checkBox
