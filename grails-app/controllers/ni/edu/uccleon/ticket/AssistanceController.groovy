@@ -86,7 +86,7 @@ class AssistanceController {
             response.sendError 404
         }
 
-        if (!assistance?.attendedBy) {
+        if (assistance.state == "PENDING") {
             assistance.delete()
 
             flash.message = "Solicitud eliminada"
