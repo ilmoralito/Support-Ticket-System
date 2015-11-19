@@ -97,6 +97,10 @@ class AssistanceController {
 
     @Secured(["ROLE_ADMIN"])
     def application() {
+        def assistances = Assistance.inState(["PENDING", "PROCESS"]).list().groupBy { it.dateCreated.clearTime() }.collect {
+            [dateCreated: it.key, assistances: it.value]
+        }
 
+        [assistances: assistances]
     }
 }
