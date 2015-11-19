@@ -24,6 +24,7 @@ class Assistance {
 
     static mapping = {
         version false
+        sort dateCreated: "asc"
     }
 
     static namedQueries = {
