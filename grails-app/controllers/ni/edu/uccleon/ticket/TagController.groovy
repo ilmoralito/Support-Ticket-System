@@ -1,6 +1,14 @@
 package ni.edu.uccleon.ticket
 
-class TagController {
+import grails.plugin.springsecurity.annotation.Secured
 
-    def index() { }
+@Secured(["ROLE_ADMIN"])
+class TagController {
+    static allowedMethods = [
+        save: "POST"
+    ]
+
+    def save() {
+        
+    }
 }

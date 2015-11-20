@@ -23,14 +23,14 @@
                       <section class="top-bar-section">
                         <ul class="right">
                             <sec:ifAllGranted roles="ROLE_ADMIN">
-                                <li class="${controllerName == 'assistance' && actionName in ['application'] ? 'active' : ''}">
+                                <li class="${controllerName == 'assistance' && actionName in ['application', 'binnacle'] ? 'active' : ''}">
                                     <g:link controller="assistance" action="application">
                                         Solicitudes
                                         <span class="label alert">#</span>
                                     </g:link>
                                 </li>
                             </sec:ifAllGranted>
-                            <li class="${controllerName == 'assistance' && !(actionName in ['application'])  ? 'active' : ''}">
+                            <li class="${controllerName == 'assistance' && !(actionName in ['application', 'binnacle'])  ? 'active' : ''}">
                                 <g:link controller="assistance">Asistencias</g:link>
                             </li>
                             <li class="has-dropdown">

@@ -13,7 +13,9 @@ class AssistanceController {
         edit: "GET",
         update: "POST",
         delete: "GET",
-        application: ["GET", "POST"]
+        application: ["GET", "POST"],
+        binnacle: ["GET", "POST"],
+        addTags: "POST"
     ]
 
     def index() {
@@ -103,5 +105,46 @@ class AssistanceController {
         }
 
         [assistances: assistances]
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def binnacle(Long id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        [assistance: assistance]
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def addTags(Long id) {
+        def assistance = Assistance.get id
+        def tags = params.list("tags")
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        // Delete current tags
+        def tempTags = []
+
+        tempTags.addAll assistance.tags
+
+        tempTags.each { tag ->
+            assistance.removeFromTags tag
+        }
+
+        // Add new Tags
+        tags.each { tag ->
+            def tagInstance = Tag.findByName tag
+
+            assistance.addToTags tagInstance
+        }
+
+        assistance.save()
+
+        redirect controller: "assistance", action: "binnacle", id: id
     }
 }

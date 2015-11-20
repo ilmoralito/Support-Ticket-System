@@ -4,7 +4,7 @@
         <g:checkBox
             name="tags"
             value="${t.name}"
-            checked="${t.name in params.list('tags')}"/>
+            checked="${t.name in assistance.tags.name}"/>
         <label>${t.name}</label>
     </div>
 </g:each>
