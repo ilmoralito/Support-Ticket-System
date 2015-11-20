@@ -14,6 +14,7 @@ class Tag {
 
     static mapping = {
         version false
+        sort "name"
     }
 
     static belongsTo = Assistance
