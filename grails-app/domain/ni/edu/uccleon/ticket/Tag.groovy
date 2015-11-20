@@ -12,5 +12,12 @@ class Tag {
         name blank: false, unique: true
     }
 
+    static mapping = {
+        version false
+    }
+
+    static belongsTo = Assistance
+    static hasMany = [assistances: Assistance]
+
     String toString() { name }
 }

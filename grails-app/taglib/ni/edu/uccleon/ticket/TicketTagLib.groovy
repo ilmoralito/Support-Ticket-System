@@ -4,9 +4,9 @@ import grails.plugins.rest.client.RestBuilder
 
 class TicketTagLib {
     def userService
+    def tagService
+
     static namespace = "ticket"
-    //static defaultEncodeAs = [taglib:'html']
-    //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def state = { attrs ->
         def states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
@@ -26,6 +26,13 @@ class TicketTagLib {
 
     def usersByRole = { attrs ->
         def users = userService.getUsersByRole(attrs.role)
+
         out << render(template: "/templates/usersByRole", model: [users: users])
+    }
+
+    def getTags = {
+        def tags = tagService.getAll()
+
+        out << render(template: "/templates/tags", model: [tags: tags])
     }
 }

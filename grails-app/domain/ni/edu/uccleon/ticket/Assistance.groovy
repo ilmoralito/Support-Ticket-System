@@ -52,6 +52,7 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
+    static hasMany = [tags: Tag]
 
     def beforeUpdate() {
         if (attendedBy && dateCompleted) {
