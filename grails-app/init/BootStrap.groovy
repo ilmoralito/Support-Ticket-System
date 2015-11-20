@@ -69,6 +69,13 @@ class BootStrap {
 		assistance3.save failOnError: true
 
 		assert Assistance.count() == 3
+
+		// tag
+
+		def printer = new Tag(name:"Impresora").save failOnError: true
+		def battery = new Tag(name:"Bateria").save failOnError: true
+		def monitor = new Tag(name:"Monitor").save failOnError: true
+		def network = new Tag(name:"Red").save failOnError: true
 	}
 	def destroy = {
 	}
