@@ -8,7 +8,15 @@ class TagController {
         save: "POST"
     ]
 
-    def save() {
-        
+    def save(Long id) {
+        def tag = new Tag(name: params?.name)
+
+        if (!tag.save()) {
+            tag.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
+
+            flash.message = "A ocurrido un error al intentar agregar etiqueta. Intentalo nuevamente"
+        }
+
+        redirect controller: "assistance", action: "binnacle", params: [id: id]
     }
 }

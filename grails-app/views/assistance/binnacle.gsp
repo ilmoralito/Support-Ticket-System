@@ -29,8 +29,6 @@
         <label>Actualizado</label>
         ${assistance.lastUpdated.format("yyyy-MM-dd")}
 
-        <hr>
-
         <g:form action="addTags">
             <g:hiddenField name="id" value="${assistance.id}"/>
             <ticket:getTags/>
@@ -38,8 +36,12 @@
             <g:submitButton name="send" value="Agregar" class="button tiny expand"/>
         </g:form>
 
-        <div class="panel">
-            
-        </div>
+        <g:form controller="tag" action="save">
+            <g:hiddenField name="id" value="${assistance.id}"/>
+            <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
+
+            <g:submitButton name="send" value="Confirmar" class="button expand"/>
+        </g:form>
+
     </content>
 </g:applyLayout>
