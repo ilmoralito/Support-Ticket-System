@@ -1,10 +1,9 @@
 package ni.edu.uccleon.ticket
 
-import grails.plugins.rest.client.RestBuilder
-
 class TicketTagLib {
     def userService
     def tagService
+    def departmentService
 
     static namespace = "ticket"
 
@@ -15,13 +14,9 @@ class TicketTagLib {
     }
 
     def renderDepartments = { attrs, body ->
-        def rest = new RestBuilder()
-        def resp = rest.get("http://localhost:9090/departments")
-        def data = resp.json.groupBy { it.area }.collect {
-            [ area: it.key, data: it.value.name ]
-        }
+        def departments = departmentService.departments
 
-        out << render(template: "/templates/departments", model: [departments: data])
+        out << render(template: "/templates/departments", model: [departments: departments])
     }
 
     def usersByRole = { attrs ->

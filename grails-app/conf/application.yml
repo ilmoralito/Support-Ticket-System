@@ -1,4 +1,9 @@
 ---
+beans:
+    departmentService:
+        departmentsQueryUrl: "http://localhost:9090/departments"
+
+---
 grails:
     profile: web
     codegen:
