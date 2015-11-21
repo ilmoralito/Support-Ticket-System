@@ -26,7 +26,7 @@ class TicketTagLib {
     }
 
     def getTags = {
-        def tags = tagService.getAll()
+        def tags = tagService.tags
 
         out << render(template: "/templates/tags", model: [tags: tags])
     }

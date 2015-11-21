@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class TagService {
 
-    def getAll() {
+    def getTags() {
         Tag.list()
     }
 }
