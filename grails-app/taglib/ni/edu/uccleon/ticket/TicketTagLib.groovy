@@ -30,4 +30,8 @@ class TicketTagLib {
 
         out << render(template: "/templates/tags", model: [tags: tags])
     }
+
+    def usersFullName = { attrs ->
+        out << userService.getUsersFullNameFromUsersEmail(attrs.attendedBy)
+    }
 }

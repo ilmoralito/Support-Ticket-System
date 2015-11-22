@@ -23,6 +23,11 @@
         <label>Estado</label>
         <ticket:state state="${assistance.state}"/>
 
+        <g:if test="${assistance.attendedBy}">
+            <label>Atendido por</label>
+            <ticket:usersFullName attendedBy="${assistance.attendedBy.toList()}"/>
+        </g:if>
+
         <label>Solicitado</label>
         ${assistance.dateCreated.format("yyyy-MM-dd")}
 
