@@ -4,13 +4,15 @@
     </head>
 
     <content tag="main">
-        <g:link controller="${controllerName}" action="create" class="button right">Crear</g:link>
+        <div class="clearfix">
+            <g:link controller="${controllerName}" action="create" class="button right">Crear</g:link>
+        </div>
 
         <g:if test="${users}">
             <table role="grid" width="100%">
                 <thead>
                     <tr>
-                        <th>Usuarios</th>
+                        <th>USUARIOS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +34,7 @@
         <g:set var="check" value="${params?.enabledStatus || params?.roles}"/>
 
         <g:form action="index" autocomplete="off">
-            <h6>Filtrar</h6>
+            <h6>Roles</h6>
             <g:each in="${ni.edu.uccleon.ticket.Role.list()}" var="role">
                 <g:checkBox
                     name="roles"
