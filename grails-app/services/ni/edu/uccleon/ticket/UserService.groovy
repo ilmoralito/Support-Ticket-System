@@ -38,6 +38,6 @@ class UserService {
     }
 
     def getUsersByRole(String role) {
-        User.list().findAll { user -> user.authorities.authority.contains(role) }
+        User.findAllByEnabled(true).findAll { user -> user.authorities.authority.contains(role) }
     }
 }
