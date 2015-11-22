@@ -2,7 +2,7 @@ package ni.edu.uccleon.ticket
 
 class Assistance {
     String description
-    User attendedBy
+    List attendedBy
     String state = "PENDING"
     Date dateCompleted
 
@@ -11,9 +11,7 @@ class Assistance {
 
     static constraints = {
         description blank: false, maxSize: 140
-        attendedBy nullable: true, validator: { attendedBy->
-            attendedBy?.authorities?.authority?.contains("ROLE_ADMIN")
-        }
+        attendedBy nullable: true
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
         dateCompleted nullable: true, validator: { dateCompleted ->
             if (dateCompleted) {
@@ -52,10 +50,10 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, attendedBy: String]
 
     def beforeUpdate() {
-        if (attendedBy && dateCompleted) {
+        if (dateCompleted) {
             state = "CLOSED"
         }
 
