@@ -30,30 +30,31 @@ class UserController {
         ]
     }
 
-    def create() {
+    def create(CreateCommand cmd) {
         if (request.method == "POST") {
-            def roles = params.list("roles")
+            if (cmd.hasErrors()) {
+                cmd.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]" }
 
-            if (roles) {
-                def user = new User(
-                    fullName: params?.fullName,
-                    email: params?.email,
-                    departments: params.list("departments")
-                )
-
-                if (!user.save()) {
-                    user.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
-                    return [user: user]
-                }
-
-                userService.addRoles roles, user
-
-                flash.message = "Agregado correctamente"
-            } else {
-                flash.message = "Selecciona al menos un rol"
+                return [user: cmd]
             }
 
-            redirect action: "create"
+            def user = new User(
+                fullName: params?.fullName,
+                email: params?.email,
+                departments: params.list("departments")
+            )
+
+            if (!user.save()) {
+                user.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
+
+                return [user: user]
+            }
+
+            userService.addRoles params.list("roles"), user
+
+            flash.message = "Agregado correctamente"
+
+            redirect action: "index"
         }
     }
 
@@ -127,6 +128,18 @@ class UserController {
 
         flash.message = "Clave actualizada"
         redirect action: "profile"
+    }
+}
+
+class CreateCommand {
+    String email
+    String fullName
+    List departments
+    List roles
+
+    static constraints = {
+        importFrom User
+        roles nullable: false
     }
 }
 

@@ -83,11 +83,7 @@ class User implements Serializable {
 			}
 		}
 		password blank: false
-		departments validator: { departments ->
-			if (!departments?.size()) {
-				"notValid"
-			}
-		}
+		departments nullable: false
 	}
 
 	static mapping = {
