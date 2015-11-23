@@ -115,7 +115,11 @@ class AssistanceController {
             response.sendError 404
         }
 
-        [assistance: assistance]
+        def isAttendedByCurrentUser = {
+            assistance.attendedBy.user.contains(springSecurityService.currentUser)
+        }
+
+        [assistance: assistance, isAttendedByCurrentUser: isAttendedByCurrentUser()]
     }
 
     @Secured(["ROLE_ADMIN"])

@@ -5,10 +5,9 @@
 
     <content tag="main">
         <g:link action="application" class="button secondary">Regresar</g:link>
-        <ul class="button-group right">
-            <li><g:link action="#" class="button">Button 1</g:link></li>
-            <li><g:link action="#" class="button">Button 2</g:link></li>
-        </ul>
+        <g:link action="#" class="button ${isAttendedByCurrentUser ? 'info' : ''} right">
+            ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
+        </g:link>
 
         <h5>Descripcion</h5>
         <p>${assistance.description}</p>
