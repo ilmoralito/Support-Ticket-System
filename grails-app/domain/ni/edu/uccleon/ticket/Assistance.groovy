@@ -2,7 +2,6 @@ package ni.edu.uccleon.ticket
 
 class Assistance {
     String description
-    List attendedBy
     String state = "PENDING"
     Date dateCompleted
 
@@ -50,7 +49,9 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
-    static hasMany = [tags: Tag, attendedBy: String]
+
+    List attendedBy
+    static hasMany = [tags: Tag, attendedBy: AttendedBy]
 
     def beforeUpdate() {
         if (dateCompleted) {

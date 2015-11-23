@@ -31,7 +31,7 @@
             ${assistance.lastUpdated.format("yyyy-MM-dd")}
 
             <label>Atendido por</label>
-            <ticket:usersFullName attendedBy="${assistance.attendedBy.toList()}"/>
+            ${assistance.attendedBy.user.fullName.join(", ")}
         </g:if>
 
         <g:if test="${assistance.attendedBy}">

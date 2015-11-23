@@ -40,8 +40,4 @@ class UserService {
     def getUsersByRole(String role) {
         User.findAllByEnabled(true).findAll { user -> user.authorities.authority.contains(role) }
     }
-
-    def getUsersFullNameFromUsersEmail(List emails) {
-        User.where { email in emails }.list().fullName.join(", ")
-    }
 }

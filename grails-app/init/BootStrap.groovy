@@ -61,18 +61,21 @@ class BootStrap {
 		assistance2.save failOnError: true
 
 		def assistance3 = new Assistance(
-			description: "grails_plugin_springsecurity_successHandler_defaultTargetUrl",
-			attendedBy: [admin1User.email]
+			description: "grails_plugin_springsecurity_successHandler_defaultTargetUrl"
 		)
+
+		assistance3.addToAttendedBy new AttendedBy(admin1User)
 
 		userUser.addToAssistances assistance3
 
 		assistance3.save failOnError: true
 
 		def assistance4 = new Assistance(
-			description: "As well as associations between different domain classes, GORM also supports mapping of basic collection types.",
-			attendedBy: [admin1User.email, admin2User.email]
+			description: "As well as associations between different domain classes, GORM also supports mapping of basic collection types."
 		)
+
+		assistance4.addToAttendedBy new AttendedBy(admin1User)
+		assistance4.addToAttendedBy new AttendedBy(admin2User)
 
 		userUser.addToAssistances assistance4
 
@@ -81,7 +84,6 @@ class BootStrap {
 		assert Assistance.count() == 4
 
 		// tag
-
 		def printer = new Tag(name:"Impresora").save failOnError: true
 		def battery = new Tag(name:"Bateria").save failOnError: true
 		def monitor = new Tag(name:"Monitor").save failOnError: true
