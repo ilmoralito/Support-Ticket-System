@@ -7,7 +7,7 @@
         <g:layoutHead/>
     </head>
     <body>
-        <div class="medium-10 columns">
+        <div class="medium-9 columns">
             <g:pageProperty name="page.main"/>
 
             <g:if test="${flash?.message}">
@@ -15,7 +15,7 @@
             </g:if>
         </div>
 
-        <div class="medium-2 columns">
+        <div class="medium-3 columns">
             <g:pageProperty name="page.sidebar"/>
         </div>
     </body>
