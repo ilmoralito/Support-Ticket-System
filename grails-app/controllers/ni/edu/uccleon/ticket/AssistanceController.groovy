@@ -15,6 +15,7 @@ class AssistanceController {
         delete: "GET",
         application: ["GET", "POST"],
         binnacle: ["GET", "POST"],
+        updateAttendedBy: "GET",
         addTags: "POST"
     ]
 
@@ -120,6 +121,27 @@ class AssistanceController {
         }
 
         [assistance: assistance, isAttendedByCurrentUser: isAttendedByCurrentUser()]
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def updateAttendedBy(Long id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        //this should be in a service
+        def currentUser = springSecurityService.currentUser
+
+        if (assistance.isAttendedBy(currentUser)) {
+            def attendedBy = AttendedBy.where { assistance == assistance && user == currentUser }.get()
+            assistance.removeFromAttendedBy attendedBy
+        } else {
+            assistance.addToAttendedBy new AttendedBy(currentUser)
+        }
+
+        redirect action: "binnacle", id: id
     }
 
     @Secured(["ROLE_ADMIN"])

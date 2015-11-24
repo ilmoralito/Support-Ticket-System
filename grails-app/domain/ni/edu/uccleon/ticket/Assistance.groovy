@@ -48,10 +48,14 @@ class Assistance {
         }
     }
 
-    static belongsTo = [user: User]
-
     List attendedBy
+
+    static belongsTo = [user: User]
     static hasMany = [tags: Tag, attendedBy: AttendedBy]
+
+    def isAttendedBy(User user) {
+        attendedBy.user.contains(user)
+    }
 
     def beforeUpdate() {
         if (dateCompleted) {

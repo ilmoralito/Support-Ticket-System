@@ -5,7 +5,10 @@
 
     <content tag="main">
         <g:link action="application" class="button secondary">Regresar</g:link>
-        <g:link action="#" class="button ${isAttendedByCurrentUser ? 'info' : ''} right">
+        <g:link
+            action="updateAttendedBy"
+            id="${assistance.id}"
+            class="button ${isAttendedByCurrentUser ? 'info' : ''} right">
             ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
         </g:link>
 
