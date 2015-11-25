@@ -7,9 +7,9 @@ import grails.transaction.Transactional
 class DepartmentService {
     def departmentsQueryUrl
 
-    def getDepartments() {
+    def getDepartments(Integer max = 25) {
         def rest = new RestBuilder()
-        def departments = rest.get(departmentsQueryUrl).json
+        def departments = rest.get("$departmentsQueryUrl?max=$max").json
         def data = departments.groupBy { it.area }.collect { department ->
             [ area: department.key, data: department.value.name ]
         }
