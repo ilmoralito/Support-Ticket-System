@@ -49,7 +49,6 @@ class BootStrap {
 		)
 
 		userUser.addToAssistances assistance1
-
 		assistance1.save failOnError: true
 
 		def assistance2 = new Assistance(
@@ -57,29 +56,31 @@ class BootStrap {
 		)
 
 		userUser.addToAssistances assistance2
-
 		assistance2.save failOnError: true
 
 		def assistance3 = new Assistance(
 			description: "grails_plugin_springsecurity_successHandler_defaultTargetUrl"
 		)
 
-		assistance3.addToAttendedBy new AttendedBy(admin1User)
-
 		userUser.addToAssistances assistance3
-
 		assistance3.save failOnError: true
 
+
+		AttendedBy.create assistance3, admin1User
+		AttendedBy.create assistance3, admin2User
+
 		def assistance4 = new Assistance(
-			description: "As well as associations between different domain classes, GORM also supports mapping of basic collection types."
+			description: """
+				As well as associations
+				between different domain classes,
+				GORM also supports mapping of basic collection types.
+				"""
 		)
 
-		assistance4.addToAttendedBy new AttendedBy(admin1User)
-		assistance4.addToAttendedBy new AttendedBy(admin2User)
-
 		userUser.addToAssistances assistance4
-
 		assistance4.save failOnError: true
+
+		AttendedBy.create assistance4, admin1User
 
 		assert Assistance.count() == 4
 

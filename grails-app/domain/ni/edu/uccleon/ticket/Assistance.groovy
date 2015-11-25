@@ -10,7 +10,6 @@ class Assistance {
 
     static constraints = {
         description blank: false, maxSize: 140
-        attendedBy nullable: true
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
         dateCompleted nullable: true, validator: { dateCompleted ->
             if (dateCompleted) {
@@ -48,13 +47,15 @@ class Assistance {
         }
     }
 
-    List attendedBy
-
     static belongsTo = [user: User]
-    static hasMany = [tags: Tag, attendedBy: AttendedBy]
+    static hasMany = [tags: Tag]
 
     def isAttendedBy(User user) {
         attendedBy.user.contains(user)
+    }
+
+    Set<AttendedBy> getAttendedBy() {
+        AttendedBy.findAllByAssistance(this)
     }
 
     def beforeUpdate() {
