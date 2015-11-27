@@ -31,7 +31,7 @@ class AttendedBy {
         criteriaFor(assistanceId, userId).get()
     }
 
-    static AttendedBy exists(Long assistanceId,long userId) {
+    static Boolean exists(long assistanceId, long userId) {
         criteriaFor(assistanceId, userId).count()
     }
 

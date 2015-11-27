@@ -116,6 +116,7 @@ class AssistanceController {
             response.sendError 404
         }
 
+
         def isAttendedByCurrentUser = {
             assistance.attendedBy.user.contains(springSecurityService.currentUser)
         }
@@ -131,14 +132,12 @@ class AssistanceController {
             response.sendError 404
         }
 
-        //this should be in a service
         def currentUser = springSecurityService.currentUser
 
-        if (assistance.isAttendedBy(currentUser)) {
-            def attendedBy = AttendedBy.where { assistance == assistance && user == currentUser }.get()
-            assistance.removeFromAttendedBy attendedBy
+        if (AttendedBy.exists(assistance.id, currentUser.id)) {
+            AttendedBy.remove assistance, currentUser
         } else {
-            assistance.addToAttendedBy new AttendedBy(currentUser)
+            AttendedBy.create assistance, currentUser
         }
 
         redirect action: "binnacle", id: id
