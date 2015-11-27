@@ -48,11 +48,7 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
-    static hasMany = [tags: Tag]
-
-    def isAttendedBy(User user) {
-        attendedBy.user.contains(user)
-    }
+    static hasMany = [tags: Tag, tasks: Task]
 
     Set<AttendedBy> getAttendedBy() {
         AttendedBy.findAllByAssistance(this)
