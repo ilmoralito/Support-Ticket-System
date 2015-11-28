@@ -1,5 +1,8 @@
 package ni.edu.uccleon.ticket
 
+import groovy.transform.ToString
+
+@ToString(cache=true, includeNames=true, includePackage=false)
 class Assistance {
     String description
     String state = "PENDING"
@@ -48,6 +51,7 @@ class Assistance {
     }
 
     static belongsTo = [user: User]
+
     static hasMany = [tags: Tag, tasks: Task]
 
     Set<AttendedBy> getAttendedBy() {
@@ -63,6 +67,4 @@ class Assistance {
             state = "PROCESS"
         }
     }
-
-    String toString() { "$user.fullName in $user.departments" }
 }
