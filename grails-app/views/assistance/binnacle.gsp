@@ -56,9 +56,14 @@
                             </td>
                             <td>${task.dateCreated.format("MM-dd, HH:mm")}</td>
                             <td>
-                                <g:link controller="task" action="delete" id="${task.id}">
-                                    X
-                                </g:link>
+                                <g:if test="${!task.status}">
+                                    <g:link
+                                        controller="task"
+                                        action="delete"
+                                        params="[id: task.id, assistanceId: assistance.id]">
+                                        X
+                                    </g:link>
+                                </g:if>
                             </td>
                         </tr>
                     </g:each>

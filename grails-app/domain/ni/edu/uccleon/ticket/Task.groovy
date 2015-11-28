@@ -31,4 +31,10 @@ class Task {
     static Task create(Assistance assistance, String description) {
         new Task(assistance, description).save flush: true
     }
+
+    static Boolean remove(Long id) {
+        def count = Task.where { id == id }.deleteAll()
+
+        count
+    }
 }
