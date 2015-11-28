@@ -30,4 +30,10 @@ class TicketTagLib {
 
         out << render(template: "/templates/tags", model: [tags: tags])
     }
+
+    def taskStatus = { attrs ->
+        def status = attrs.status ? "ATENDIDO" : "PENDIENTE"
+
+        out << status
+    }
 }

@@ -78,6 +78,11 @@ class BootStrap {
 		)
 
 		userUser.addToAssistances assistance4
+
+		assistance4.addToTasks new Task("description number one")
+		assistance4.addToTasks new Task("description number two")
+		assistance4.addToTasks new Task("description number three")
+
 		assistance4.save failOnError: true
 
 		AttendedBy.create assistance4, admin1User

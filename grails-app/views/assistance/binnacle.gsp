@@ -14,6 +14,57 @@
 
         <h5>Descripcion</h5>
         <p>${assistance.description}</p>
+        
+        <g:if test="${isAttendedByCurrentUser}">
+            <g:form controller="task" action="save" autocomplete="off">
+                <g:hiddenField name="assistanceId" value="${assistance.id}"/>
+                <g:textArea name="description" placeholder="Descripcion"/>
+
+                <g:submitButton name="send" value="Agregar tarea" class="button"/>
+            </g:form>
+        </g:if>
+
+        <g:if test="${tasks}">
+            <caption>${tasks.size()} TAREAS</caption>
+            
+            <table width="100%">
+                <colgroup>
+                   <col span="1" style="width: 1%;">
+                   <col span="1" style="width: 70%;">
+                   <col span="1" style="width: 9%;">
+                   <col span="1" style="width: 15%;">
+                   <col span="1" style="width: 4%;">
+               </colgroup>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>DESCRIPCION</th>
+                        <th>ESTADO</th>
+                        <th>CREADO</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <g:each in="${tasks}" var="task" status="i">
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${task.description}</td>
+                            <td>
+                                <g:link controller="task" action="updateStatus" id="${task.id}">
+                                    <ticket:taskStatus status="${task.status}"/>
+                                </g:link>
+                            </td>
+                            <td>${task.dateCreated.format("MM-dd, HH:mm")}</td>
+                            <td>
+                                <g:link controller="task" action="delete" id="${task.id}">
+                                    X
+                                </g:link>
+                            </td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </g:if>
     </content>
     <content tag="sidebar">
         <label>Por</label>
