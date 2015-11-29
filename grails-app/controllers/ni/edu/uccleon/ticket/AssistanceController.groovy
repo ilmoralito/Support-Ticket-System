@@ -116,13 +116,9 @@ class AssistanceController {
             response.sendError 404
         }
 
-        def isAttendedByCurrentUser = {
-            assistance.attendedBy.user.contains(springSecurityService.currentUser)
-        }
-
         [
             assistance: assistance,
-            isAttendedByCurrentUser: isAttendedByCurrentUser(),
+            isAttendedByCurrentUser: AttendedBy.exists(id, springSecurityService.loadCurrentUser().id,
             tasks: assistance.tasks
         ]
     }

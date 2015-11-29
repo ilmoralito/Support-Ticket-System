@@ -52,16 +52,21 @@
                             <td>${i + 1}</td>
                             <td>${task.description}</td>
                             <td>
-                                <g:link
-                                    controller="task"
-                                    action="updateStatus"
-                                    params="[id: task.id, assistanceId: assistance.id]">
+                                <g:if test="${isAttendedByCurrentUser}">
+                                    <g:link
+                                        controller="task"
+                                        action="updateStatus"
+                                        params="[id: task.id, assistanceId: assistance.id]">
+                                        <ticket:taskStatus status="${task.status}"/>
+                                    </g:link>
+                                </g:if>
+                                <g:else>
                                     <ticket:taskStatus status="${task.status}"/>
-                                </g:link>
+                                </g:else>
                             </td>
                             <td>${task.dateCreated.format("MM-dd, HH:mm")}</td>
                             <td>
-                                <g:if test="${!task.status}">
+                                <g:if test="${isAttendedByCurrentUser}">
                                     <g:link
                                         controller="task"
                                         action="delete"
@@ -69,6 +74,9 @@
                                         <i class="fi-trash"></i>
                                     </g:link>
                                 </g:if>
+                                <g:else>
+                                    <i class="fi-trash"></i>
+                                </g:else>
                             </td>
                         </tr>
                     </g:each>
@@ -97,7 +105,7 @@
             ${assistance.attendedBy.user.fullName.join(", ")}
         </g:if>
 
-        <g:if test="${assistance.attendedBy}">
+        <g:if test="${isAttendedByCurrentUser}">
             <g:form action="addTags">
                 <g:hiddenField name="id" value="${assistance.id}"/>
                 <ticket:getTags/>
