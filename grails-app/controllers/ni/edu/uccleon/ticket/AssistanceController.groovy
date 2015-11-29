@@ -118,7 +118,7 @@ class AssistanceController {
 
         [
             assistance: assistance,
-            isAttendedByCurrentUser: AttendedBy.exists(id, springSecurityService.loadCurrentUser().id,
+            isAttendedByCurrentUser: AttendedBy.exists(id, springSecurityService.loadCurrentUser().id),
             tasks: assistance.tasks
         ]
     }
