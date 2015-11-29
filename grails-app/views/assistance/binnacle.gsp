@@ -50,7 +50,10 @@
                             <td>${i + 1}</td>
                             <td>${task.description}</td>
                             <td>
-                                <g:link controller="task" action="updateStatus" id="${task.id}">
+                                <g:link
+                                    controller="task"
+                                    action="updateStatus"
+                                    params="[id: task.id, assistanceId: assistance.id]">
                                     <ticket:taskStatus status="${task.status}"/>
                                 </g:link>
                             </td>

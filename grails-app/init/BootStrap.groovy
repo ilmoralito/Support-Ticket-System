@@ -79,7 +79,7 @@ class BootStrap {
 
 		userUser.addToAssistances assistance4
 
-		assistance4.addToTasks new Task("description number one")
+		assistance4.addToTasks new Task("description number one", true)
 		assistance4.addToTasks new Task("description number two")
 		assistance4.addToTasks new Task("description number three")
 

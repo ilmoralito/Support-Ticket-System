@@ -6,7 +6,8 @@ import grails.plugin.springsecurity.annotation.Secured
 class TaskController {
     static allowedMethods = [
         save: "POST",
-        delete: "GET"
+        delete: "GET",
+        updateStatus: "GET"
     ]
 
     def save(Integer assistanceId) {
@@ -30,7 +31,27 @@ class TaskController {
             response.sendError 404
         }
 
-        if (!Task.remove(id)) {
+        if (task.status) {
+            response.sendError 403
+        } else {
+            flash.message = Task.remove(id) ? "Tarea eliminada" : "A ocurrido un error"
+        }
+
+        redirect controller: "assistance", action: "binnacle", id: assistanceId
+    }
+
+    def updateStatus(Long id, Long assistanceId) {
+        def task = Task.get id
+
+        if (!task) {
+            response.sendError 404
+        }
+
+        task.properties["status"] = !task.status
+
+        if (!task.save()) {
+            task.errors.allErrors.each { err -> log.error "[$err.field: $err.defaultMessage]"}
+
             flash.message = "A ocurrido un error"
         }
 

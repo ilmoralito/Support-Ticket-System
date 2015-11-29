@@ -15,9 +15,10 @@ class Task {
         this.description = description
     }
 
-    Task(String description) {
+    Task(String description, Boolean status = false) {
         this()
         this.description = description
+        this.status = status
     }
 
     static constraints = {
