@@ -41,7 +41,9 @@
                         <th>DESCRIPCION</th>
                         <th>ESTADO</th>
                         <th>CREADO</th>
-                        <th></th>
+                        <th>
+                            <i class="fi-trash"></i>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +66,7 @@
                                         controller="task"
                                         action="delete"
                                         params="[id: task.id, assistanceId: assistance.id]">
-                                        X
+                                        <i class="fi-trash"></i>
                                     </g:link>
                                 </g:if>
                             </td>
