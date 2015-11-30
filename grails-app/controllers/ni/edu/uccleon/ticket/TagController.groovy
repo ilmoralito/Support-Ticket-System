@@ -17,6 +17,6 @@ class TagController {
             flash.message = "A ocurrido un error al intentar agregar etiqueta. Intentalo nuevamente"
         }
 
-        redirect controller: "assistance", action: "binnacle", params: [id: id]
+        redirect controller: "assistance", action: "binnacle", id: id, fragment: "${tag?.name ?: 'createTag'}"
     }
 }

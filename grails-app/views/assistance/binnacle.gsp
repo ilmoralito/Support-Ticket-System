@@ -121,7 +121,7 @@
                 </g:form>
             </div>
                 
-            <div class="panel">
+            <div class="panel" id="createTag">
                 <g:form controller="tag" action="save">
                     <g:hiddenField name="id" value="${assistance.id}"/>
                     <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
