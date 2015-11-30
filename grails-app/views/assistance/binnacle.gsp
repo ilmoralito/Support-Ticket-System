@@ -123,7 +123,7 @@
                 
             <div class="panel" id="createTag">
                 <g:form controller="tag" action="save">
-                    <g:hiddenField name="id" value="${assistance.id}"/>
+                    <g:hiddenField name="assistanceId" value="${assistance.id}"/>
                     <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
                 
                     <g:submitButton name="send" value="Confirmar" class="button expand" style="margin-bottom: 3px;"/>
