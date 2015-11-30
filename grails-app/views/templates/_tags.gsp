@@ -1,4 +1,3 @@
-<h6>Etiquetas</h6>
 <g:each in="${tags}" var="t">
     <div>
         <g:checkBox

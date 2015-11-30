@@ -12,7 +12,7 @@
             ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
         </g:link>
 
-        <h5>Descripcion</h5>
+        <h5>DESCRIPCION</h5>
         <p>${assistance.description}</p>
         
         <g:if test="${isAttendedByCurrentUser}">
@@ -85,40 +85,50 @@
         </g:if>
     </content>
     <content tag="sidebar">
-        <label>Por</label>
-        ${assistance.user.fullName}
-        
-        <label>Departamento</label>
-        ${assistance.user.departments.join(", ")}
-        
-        <label>Estado</label>
-        <ticket:state state="${assistance.state}"/>
-        
-        <label>Solicitado</label>
-        ${assistance.dateCreated.format("yyyy-MM-dd")}
+        <div class="panel">
+            <h5>DETALLE</h5>
 
-        <g:if test="${assistance.attendedBy}">
-            <label>Actualizado</label>
-            ${assistance.lastUpdated.format("yyyy-MM-dd")}
+            <h6>Por</h6>
+            <p>${assistance.user.fullName}</p>
 
-            <label>Atendido por</label>
-            ${assistance.attendedBy.user.fullName.join(", ")}
-        </g:if>
+            <h6>Departamento</h6>
+            <p>${assistance.user.departments.join(", ")}</p>
+
+            <h6>Estado</h6>
+            <p><ticket:state state="${assistance.state}"/></p>
+
+            <h6>Solicitado</h6>
+            <p>${assistance.dateCreated.format("yyyy-MM-dd")}</p>
+
+            <g:if test="${assistance.attendedBy}">
+                <h6>Actualizado</h6>
+                <p>${assistance.lastUpdated.format("yyyy-MM-dd")}</p>
+
+                <h6>Atendido por</h6>
+                <p>${assistance.attendedBy.user.fullName.join(", ")}</p>
+            </g:if>
+        </div>
 
         <g:if test="${isAttendedByCurrentUser}">
-            <g:form action="addTags">
-                <g:hiddenField name="id" value="${assistance.id}"/>
-                <ticket:getTags/>
+            <div class="panel">
+                <h5>ETIQUETAS</h5>
 
-                <g:submitButton name="send" value="Agregar" class="button tiny expand"/>
-            </g:form>
-
-            <g:form controller="tag" action="save">
-                <g:hiddenField name="id" value="${assistance.id}"/>
-                <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
-
-                <g:submitButton name="send" value="Confirmar" class="button expand"/>
-            </g:form>
+                <g:form action="addTags">
+                    <g:hiddenField name="id" value="${assistance.id}"/>
+                    <ticket:getTags/>
+                
+                    <g:submitButton name="send" value="Agregar" class="button tiny expand" style="margin-bottom: 3px;"/>
+                </g:form>
+            </div>
+                
+            <div class="panel">
+                <g:form controller="tag" action="save">
+                    <g:hiddenField name="id" value="${assistance.id}"/>
+                    <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
+                
+                    <g:submitButton name="send" value="Confirmar" class="button expand" style="margin-bottom: 3px;"/>
+                </g:form>
+            </div>
         </g:if>
 
     </content>

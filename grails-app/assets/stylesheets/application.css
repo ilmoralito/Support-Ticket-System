@@ -7,3 +7,8 @@
 body { padding-top: 75px; }
 
 table { border: 0; }
+
+.panel {
+	background: #FFF;
+	border: 1px solid #EEE;
+}
