@@ -9,7 +9,7 @@ class Tag {
     String name
 
     static constraints = {
-        name blank: false, unique: true
+        name blank: false, unique: true, validator: { name -> !name.contains(" ") }
     }
 
     static mapping = {
