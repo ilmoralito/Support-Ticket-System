@@ -110,7 +110,7 @@
         </div>
 
         <g:if test="${isAttendedByCurrentUser}">
-            <div class="panel">
+            <div class="panel" id="listTag">
                 <h5>ETIQUETAS</h5>
 
                 <g:form action="addTags">

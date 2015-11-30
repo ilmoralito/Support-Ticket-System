@@ -169,6 +169,6 @@ class AssistanceController {
 
         assistance.save()
 
-        redirect controller: "assistance", action: "binnacle", id: id
+        redirect controller: "assistance", action: "binnacle", id: id, fragment: "listTag"
     }
 }
