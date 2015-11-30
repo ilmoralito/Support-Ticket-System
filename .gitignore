@@ -10,4 +10,5 @@ build/
 .settings
 .classpath
 .asscache
+grails-app/assets/components/
 todo
