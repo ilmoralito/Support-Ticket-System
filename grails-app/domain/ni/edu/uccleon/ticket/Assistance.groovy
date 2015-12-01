@@ -14,9 +14,17 @@ class Assistance {
     static constraints = {
         description blank: false, maxSize: 140
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
-        dateCompleted nullable: true, validator: { dateCompleted ->
+        dateCompleted nullable: true, validator: { dateCompleted, assistance ->
             if (dateCompleted) {
-                dateCompleted >= new Date()
+                def now = new Date().clearTime()
+                def validDate = dateCompleted >= now
+                def taskNotAttended = assistance?.tasks?.countBy { task ->
+                    task.status
+                }.containsKey(false)
+
+                if (!assistance.tasks || taskNotAttended || !assistance.tags || !validDate) {
+                    return "not.allowed"
+                }
             }
         }
     }
@@ -60,12 +68,8 @@ class Assistance {
     }
 
     def beforeUpdate() {
-        if (dateCompleted) {
-            state = "CLOSED"
-        }
-
-        if (attendedBy) {
-            state = "PROCESS"
+        if (isDirty("dateCompleted")) {
+            state = dateCompleted ? "CLOSED" : "PROCESS"
         }
     }
 }

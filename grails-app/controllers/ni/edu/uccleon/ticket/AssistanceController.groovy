@@ -16,7 +16,8 @@ class AssistanceController {
         application: ["GET", "POST"],
         binnacle: ["GET", "POST"],
         updateAttendedBy: "GET",
-        addTags: "POST"
+        addTags: "POST",
+        setOrUnsetDateCompleted: "GET"
     ]
 
     def index() {
@@ -132,12 +133,17 @@ class AssistanceController {
         }
 
         def currentUser = springSecurityService.currentUser
+        def flag = false
 
         if (AttendedBy.exists(assistance.id, currentUser.id)) {
+            flag = true
             AttendedBy.remove assistance, currentUser
         } else {
             AttendedBy.create assistance, currentUser
         }
+
+        assistance.properties["state"] = flag ? "PENDING" : "PROCESS"
+        assistance.save()
 
         redirect action: "binnacle", id: id
     }
@@ -170,5 +176,24 @@ class AssistanceController {
         assistance.save()
 
         redirect controller: "assistance", action: "binnacle", id: id, fragment: "listTag"
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def setOrUnsetDateCompleted(Long id) {
+        def assistance = Assistance.get id
+
+        if (!assistance) {
+            response.sendError 404
+        }
+
+        assistance.properties["dateCompleted"] = !assistance.dateCompleted ? new Date() : null
+
+        if (!assistance.save()) {
+            assistance.errors.allErrors.each { err ->
+                log.error "[$err.field: $err.defaultMessage]"
+            }
+        }
+
+        redirect action: "binnacle", id: id
     }
 }

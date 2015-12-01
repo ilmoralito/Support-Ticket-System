@@ -5,12 +5,6 @@
 
     <content tag="main">
         <g:link action="application" class="button secondary">Regresar</g:link>
-        <g:link
-            action="updateAttendedBy"
-            id="${assistance.id}"
-            class="button ${isAttendedByCurrentUser ? 'info' : ''} right">
-            ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
-        </g:link>
 
         <h5>DESCRIPCION</h5>
         <p>${assistance.description}</p>
@@ -85,6 +79,22 @@
         </g:if>
     </content>
     <content tag="sidebar">
+        <g:link
+            action="updateAttendedBy"
+            id="${assistance.id}"
+            class="button ${isAttendedByCurrentUser ? 'info' : ''} expand">
+            ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
+        </g:link>
+
+        <g:if test="${isAttendedByCurrentUser}">
+            <g:link
+                action="setOrUnsetDateCompleted"
+                id="${assistance.id}"
+                class="button warning expand">
+                <assistance:dateCompletedStatus status="${assistance?.dateCompleted}"/>
+            </g:link>
+        </g:if>
+
         <div class="panel">
             <h5>DETALLE</h5>
 
