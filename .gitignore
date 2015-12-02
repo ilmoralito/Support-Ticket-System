@@ -12,3 +12,4 @@ build/
 .asscache
 grails-app/assets/components/
 todo
+todo.adoc
