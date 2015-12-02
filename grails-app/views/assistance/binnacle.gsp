@@ -23,6 +23,8 @@
                     </a>
                 </small>
 
+                <div class="clearfix"></div>
+
                 <g:submitButton name="send" value="Agregar tarea" class="button"/>
             </g:form>
         </g:if>
