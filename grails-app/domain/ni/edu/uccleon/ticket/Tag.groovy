@@ -2,7 +2,7 @@ package ni.edu.uccleon.ticket
 
 import org.grails.databinding.BindUsing
 
-class Tag {
+class Tag implements Comparable {
     @BindUsing({
         obj, source -> source["name"]?.toLowerCase()?.tokenize(" ")*.capitalize().join(" ")
     })
@@ -19,6 +19,10 @@ class Tag {
 
     static belongsTo = Assistance
     static hasMany = [assistances: Assistance]
+
+    int compareTo(obj) {
+        name.compareTo(obj.name)
+    }
 
     String toString() { name }
 }

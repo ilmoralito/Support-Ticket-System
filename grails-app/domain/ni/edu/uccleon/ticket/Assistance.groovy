@@ -7,6 +7,7 @@ class Assistance {
     String description
     String state = "PENDING"
     Date dateCompleted
+    SortedSet tags
 
     Date dateCreated
     Date lastUpdated

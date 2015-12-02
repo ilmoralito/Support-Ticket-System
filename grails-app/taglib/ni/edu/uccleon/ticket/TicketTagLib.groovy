@@ -36,4 +36,10 @@ class TicketTagLib {
 
         out << status
     }
+
+    def getAssistanceTags = { attrs ->
+        def tags = attrs.tags
+
+        out << render(template: "/templates/assistanceTags", model: [tags: tags])
+    }
 }

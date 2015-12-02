@@ -9,7 +9,7 @@
         <h5>DESCRIPCION</h5>
         <p>${assistance.description}</p>
         
-        <g:if test="${isAttendedByCurrentUser}">
+        <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
             <g:form controller="task" action="save" autocomplete="off">
                 <g:hiddenField name="assistanceId" value="${assistance.id}"/>
                 <g:textArea name="description" placeholder="Descripcion" style="min-height: 150px; min-width: 100%;"/>
@@ -30,45 +30,48 @@
         </g:if>
 
         <g:if test="${tasks}">
-            <caption>${tasks.size()} TAREAS</caption>
+            <h5>${tasks.size()} TAREAS</h5>
 
             <g:each in="${tasks}" var="task">
                 <div class="panel" id="${task.id}">
-                    <div>
-                        <ul class="button-group right">
-                            <li>
-                                <g:if test="${isAttendedByCurrentUser}">
-                                    <g:link
-                                        controller="task"
-                                        action="updateStatus"
-                                        params="[id: task.id, assistanceId: assistance.id]"
-                                        class="button  tiny">
+                    <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
+                        <div>
+                            <ul class="button-group right">
+                                <li>
+                                    <g:if test="${isAttendedByCurrentUser}">
+                                        <g:link
+                                            controller="task"
+                                            action="updateStatus"
+                                            params="[id: task.id, assistanceId: assistance.id]"
+                                            class="button  tiny">
+                                            <ticket:taskStatus status="${task.status}"/>
+                                        </g:link>
+                                    </g:if>
+                                    <g:else>
                                         <ticket:taskStatus status="${task.status}"/>
-                                    </g:link>
-                                </g:if>
-                                <g:else>
-                                    <ticket:taskStatus status="${task.status}"/>
-                                </g:else>
-                            </li>
-                            <li>
-                                <g:if test="${isAttendedByCurrentUser}">
-                                    <g:link
-                                        controller="task"
-                                        action="delete"
-                                        params="[id: task.id, assistanceId: assistance.id]"
-                                        class="button secundary tiny">
-                                        <i class="fi-trash"></i>
-                                    </g:link>
-                                </g:if>
-                            </li>
-                        </ul>
-                    </div>
+                                    </g:else>
+                                </li>
+                                <li>
+                                    <g:if test="${isAttendedByCurrentUser}">
+                                        <g:link
+                                            controller="task"
+                                            action="delete"
+                                            params="[id: task.id, assistanceId: assistance.id]"
+                                            class="button secundary tiny">
+                                            <i class="fi-trash"></i>
+                                        </g:link>
+                                    </g:if>
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+                    </g:if>
 
                     <div>
                         <small class="right">
-                            ATENDIDO: ${task.dateCreated.format("MM-dd, HH:mm")}, POR: ${task.user.fullName}
+                            ATENDIDO: ${task.dateCreated.format("MM-dd, HH:mm")},
+                            POR: ${task.user.fullName.toUpperCase()}
                         </small>
                     </div>
 
@@ -80,12 +83,14 @@
         </g:if>
     </content>
     <content tag="sidebar">
-        <g:link
-            action="updateAttendedBy"
-            id="${assistance.id}"
-            class="button expand">
-            ${isAttendedByCurrentUser ? "ATENDIENDO" : "SIN ATENDER"}
-        </g:link>
+        <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
+            <g:link
+                action="updateAttendedBy"
+                id="${assistance.id}"
+                class="button expand">
+                ${isAttendedByCurrentUser ? "ATENDIENDO" : "SIN ATENDER"}
+            </g:link>
+        </g:if>
 
         <g:if test="${isAttendedByCurrentUser}">
             <g:link
@@ -118,9 +123,15 @@
                 <h6>Atendido por</h6>
                 <p>${assistance.attendedBy.user.fullName.join(", ")}</p>
             </g:if>
+
+            <g:if test="${assistance.state == 'CLOSED'}">
+                <h6>ETIQUETAS</h6>
+
+                <ticket:getAssistanceTags tags="${assistance.tags}"/>
+            </g:if>
         </div>
 
-        <g:if test="${isAttendedByCurrentUser}">
+        <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
             <div class="panel" id="listTag">
                 <h5>ETIQUETAS</h5>
 
