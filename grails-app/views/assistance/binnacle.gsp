@@ -12,7 +12,7 @@
         <g:if test="${isAttendedByCurrentUser}">
             <g:form controller="task" action="save" autocomplete="off">
                 <g:hiddenField name="assistanceId" value="${assistance.id}"/>
-                <g:textArea name="description" placeholder="Descripcion"/>
+                <g:textArea name="description" placeholder="Descripcion" style="min-height: 150px;"/>
                 <small class="right special-formating-text">
                     <b>*bold*</b>
                     <i>_italics_</i>
@@ -32,48 +32,45 @@
 
             <g:each in="${tasks}" var="task">
                 <div class="panel" id="${task.id}">
-                    <div class="row">
-                        <div class="medium-12 columns">
-                            <div class="right">
+                    <div>
+                        <ul class="button-group right">
+                            <li>
                                 <g:if test="${isAttendedByCurrentUser}">
                                     <g:link
                                         controller="task"
                                         action="updateStatus"
                                         params="[id: task.id, assistanceId: assistance.id]"
-                                        class="button tiny">
+                                        class="button  tiny">
                                         <ticket:taskStatus status="${task.status}"/>
                                     </g:link>
                                 </g:if>
                                 <g:else>
                                     <ticket:taskStatus status="${task.status}"/>
                                 </g:else>
-
+                            </li>
+                            <li>
                                 <g:if test="${isAttendedByCurrentUser}">
                                     <g:link
                                         controller="task"
                                         action="delete"
                                         params="[id: task.id, assistanceId: assistance.id]"
-                                        class="button tiny">
+                                        class="button secundary tiny">
                                         <i class="fi-trash"></i>
                                     </g:link>
                                 </g:if>
-                                <g:else>
-                                    <i class="fi-trash"></i>
-                                </g:else>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="row">
-                        <div class="medium-12 columns">
-                            <small class="right">
-                                Atendido: ${task.dateCreated.format("MM-dd, HH:mm")}, creado por: Fulano de tal
-                            </small>
-                        </div>
-                    </div>
-                    
-                    <g:set var="html" value="${asciidoctor.convert(task.description, new HashMap<String, Object>())}"/>
 
-                    <br>
+                    <div class="clearfix"></div>
+
+                    <div>
+                        <small class="right">
+                            ATENDIDO: ${task.dateCreated.format("MM-dd, HH:mm")}, POR: Fulano de tal
+                        </small>
+                    </div>
+
+                    <g:set var="html" value="${asciidoctor.convert(task.description, new HashMap<String, Object>())}"/>
 
                     <p>${raw(html)}</p>
                 </div>
