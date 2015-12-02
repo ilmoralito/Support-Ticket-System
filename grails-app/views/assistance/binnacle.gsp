@@ -81,8 +81,8 @@
         <g:link
             action="updateAttendedBy"
             id="${assistance.id}"
-            class="button ${isAttendedByCurrentUser ? 'info' : ''} expand">
-            ${isAttendedByCurrentUser ? "Atendiendo" : "Sin atender"}
+            class="button expand">
+            ${isAttendedByCurrentUser ? "ATENDIENDO" : "SIN ATENDER"}
         </g:link>
 
         <g:if test="${isAttendedByCurrentUser}">

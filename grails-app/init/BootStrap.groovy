@@ -44,22 +44,19 @@ class BootStrap {
 		assert UserRole.count() == 4
 
 		// assistance
-		def assistance1 = new Assistance(
-			description: "Lorem ipsum dolor sip ament"
-		)
+		def assistance1 = new Assistance("Lorem ipsum dolor sip ament")
 
 		userUser.addToAssistances assistance1
 		assistance1.save failOnError: true
 
-		def assistance2 = new Assistance(
-			description: "Blah bla bla yakiris markiris"
-		)
+		def assistance2 = new Assistance("Blah bla bla yakiris markiris")
 
 		userUser.addToAssistances assistance2
 		assistance2.save failOnError: true
 
 		def assistance3 = new Assistance(
-			description: "grails_plugin_springsecurity_successHandler_defaultTargetUrl"
+			"grails_plugin_springsecurity_successHandler_defaultTargetUrl",
+			"PROCESS"
 		)
 
 		userUser.addToAssistances assistance3
@@ -70,11 +67,12 @@ class BootStrap {
 		AttendedBy.create assistance3, admin2User
 
 		def assistance4 = new Assistance(
-			description: """
+			"""
 				As well as associations
 				between different domain classes,
 				GORM also supports mapping of basic collection types.
-				"""
+			""",
+			"PROCESS"
 		)
 
 		userUser.addToAssistances assistance4

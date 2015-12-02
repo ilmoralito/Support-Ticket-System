@@ -29,6 +29,17 @@ class Assistance {
         }
     }
 
+    Assistance(String description) {
+        this()
+        this.description = description
+    }
+
+    Assistance(String description, String state) {
+        this()
+        this.description = description
+        this.state = state
+    }
+
     static mapping = {
         version false
         sort dateCreated: "asc"
