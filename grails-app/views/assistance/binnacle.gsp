@@ -13,6 +13,15 @@
             <g:form controller="task" action="save" autocomplete="off">
                 <g:hiddenField name="assistanceId" value="${assistance.id}"/>
                 <g:textArea name="description" placeholder="Descripcion"/>
+                <small class="right special-formating-text">
+                    <b>*bold*</b>
+                    <i>_italics_</i>
+                    ~strike~
+                    <span>- list</span>
+                    <a href="http://asciidoctor.org/docs/asciidoc-writers-guide/" target="_blank">
+                        ...mas opciones
+                    </a>
+                </small>
 
                 <g:submitButton name="send" value="Agregar tarea" class="button"/>
             </g:form>
