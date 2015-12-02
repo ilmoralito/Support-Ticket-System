@@ -20,62 +20,55 @@
 
         <g:if test="${tasks}">
             <caption>${tasks.size()} TAREAS</caption>
-            
-            <table width="100%">
-                <colgroup>
-                   <col span="1" style="width: 1%;">
-                   <col span="1" style="width: 70%;">
-                   <col span="1" style="width: 9%;">
-                   <col span="1" style="width: 15%;">
-                   <col span="1" style="width: 4%;">
-               </colgroup>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>DESCRIPCION</th>
-                        <th>ESTADO</th>
-                        <th>CREADO</th>
-                        <th>
-                            <i class="fi-trash"></i>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <g:each in="${tasks}" var="task" status="i">
-                        <tr>
-                            <td>${i + 1}</td>
-                            <td>${task.description}</td>
-                            <td>
+
+            <g:each in="${tasks}" var="task">
+                <div class="panel" id="${task.id}">
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <div class="right">
                                 <g:if test="${isAttendedByCurrentUser}">
                                     <g:link
                                         controller="task"
                                         action="updateStatus"
-                                        params="[id: task.id, assistanceId: assistance.id]">
+                                        params="[id: task.id, assistanceId: assistance.id]"
+                                        class="button tiny">
                                         <ticket:taskStatus status="${task.status}"/>
                                     </g:link>
                                 </g:if>
                                 <g:else>
                                     <ticket:taskStatus status="${task.status}"/>
                                 </g:else>
-                            </td>
-                            <td>${task.dateCreated.format("MM-dd, HH:mm")}</td>
-                            <td>
+
                                 <g:if test="${isAttendedByCurrentUser}">
                                     <g:link
                                         controller="task"
                                         action="delete"
-                                        params="[id: task.id, assistanceId: assistance.id]">
+                                        params="[id: task.id, assistanceId: assistance.id]"
+                                        class="button tiny">
                                         <i class="fi-trash"></i>
                                     </g:link>
                                 </g:if>
                                 <g:else>
                                     <i class="fi-trash"></i>
                                 </g:else>
-                            </td>
-                        </tr>
-                    </g:each>
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <small class="right">
+                                Atendido: ${task.dateCreated.format("MM-dd, HH:mm")}, creado por: Fulano de tal
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <g:set var="html" value="${asciidoctor.convert(task.description, new HashMap<String, Object>())}"/>
+
+                    <br>
+
+                    <p>${raw(html)}</p>
+                </div>
+            </g:each>
         </g:if>
     </content>
     <content tag="sidebar">

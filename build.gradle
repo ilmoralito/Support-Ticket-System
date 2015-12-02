@@ -76,6 +76,7 @@ dependencies {
     //app plugins
     compile "org.grails.plugins:spring-security-core:3.0.0.M1"
     compile "org.grails:grails-datastore-rest-client:4.0.7.RELEASE"
+    compile "org.asciidoctor:asciidoctorj:1.5.2"
 }
 
 task wrapper(type: Wrapper) {

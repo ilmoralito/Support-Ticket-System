@@ -55,6 +55,6 @@ class TaskController {
             flash.message = "A ocurrido un error"
         }
 
-        redirect controller: "assistance", action: "binnacle", id: assistanceId
+        redirect controller: "assistance", action: "binnacle", id: assistanceId, fragment: id
     }
 }
