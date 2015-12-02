@@ -4,6 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(["ROLE_ADMIN"])
 class TaskController {
+    def springSecurityService
+
     static allowedMethods = [
         save: "POST",
         delete: "GET",
@@ -17,7 +19,7 @@ class TaskController {
             response.sendError 404
         }
 
-        if (!Task.create(assistance, params.description)) {
+        if (!Task.create(springSecurityService.currentUser, assistance, params.description)) {
             flash.message = "A ocurrido un error"
         }
 

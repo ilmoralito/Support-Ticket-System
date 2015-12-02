@@ -4,19 +4,22 @@ import groovy.transform.ToString
 
 @ToString(cache=true, includeNames=true, includePackage=false)
 class Task {
+    User user
     Date dateCreated
     Date lastUpdated
     String description
     Boolean status = false
 
-    Task(Assistance assistance, String description) {
+    Task(User user, Assistance assistance, String description) {
         this()
+        this.user = user
         this.assistance = assistance
         this.description = description
     }
 
-    Task(String description, Boolean status = false) {
+    Task(User user, String description, Boolean status = false) {
         this()
+        this.user = user
         this.description = description
         this.status = status
     }
@@ -29,8 +32,8 @@ class Task {
 
     static mapping = { version false }
 
-    static Task create(Assistance assistance, String description) {
-        new Task(assistance, description).save flush: true
+    static Task create(User user, Assistance assistance, String description) {
+        new Task(user, assistance, description).save flush: true
     }
 
     static Boolean remove(Long id) {

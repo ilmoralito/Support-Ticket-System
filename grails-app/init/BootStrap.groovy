@@ -79,9 +79,9 @@ class BootStrap {
 
 		userUser.addToAssistances assistance4
 
-		assistance4.addToTasks new Task("description number one", true)
-		assistance4.addToTasks new Task("description number two")
-		assistance4.addToTasks new Task("description number three")
+		assistance4.addToTasks new Task(admin1User, "description number one", true)
+		assistance4.addToTasks new Task(admin2User, "description number two")
+		assistance4.addToTasks new Task(admin1User, "description number three")
 
 		assistance4.save failOnError: true
 

@@ -12,7 +12,7 @@
         <g:if test="${isAttendedByCurrentUser}">
             <g:form controller="task" action="save" autocomplete="off">
                 <g:hiddenField name="assistanceId" value="${assistance.id}"/>
-                <g:textArea name="description" placeholder="Descripcion" style="min-height: 150px;"/>
+                <g:textArea name="description" placeholder="Descripcion" style="min-height: 150px; min-width: 100%;"/>
                 <small class="right special-formating-text">
                     <b>*bold*</b>
                     <i>_italics_</i>
@@ -66,7 +66,7 @@
 
                     <div>
                         <small class="right">
-                            ATENDIDO: ${task.dateCreated.format("MM-dd, HH:mm")}, POR: Fulano de tal
+                            ATENDIDO: ${task.dateCreated.format("MM-dd, HH:mm")}, POR: ${task.user.fullName}
                         </small>
                     </div>
 
