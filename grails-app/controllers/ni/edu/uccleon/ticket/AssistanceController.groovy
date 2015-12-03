@@ -43,9 +43,10 @@ class AssistanceController {
     }
 
     def create() {
+        def assistance = new Assistance(params)
+
         if (request.method == "POST") {
             def user = springSecurityService.currentUser
-            def assistance = new Assistance(params)
 
             user.addToAssistances assistance
 
@@ -57,6 +58,8 @@ class AssistanceController {
             flash.message = "Creada ticket de mantenimiento"
             redirect action: "index"
         }
+
+        [assistance: assistance]
     }
 
     def edit(Integer id) {
