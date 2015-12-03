@@ -32,7 +32,7 @@ class AssistanceController {
 
                 Assistance.byCurrentUser().filter(state, attendedBy).list()
             } else {
-                Assistance.byCurrentUser().inState("PENDING").list()
+                Assistance.byCurrentUser().inState(["PENDING", "PROCESS"]).list()
             }
         }
 
