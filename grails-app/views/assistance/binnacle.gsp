@@ -83,7 +83,7 @@
         </g:if>
     </content>
     <content tag="sidebar">
-        <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
+        <g:if test="${assistance.state != 'CLOSED'}">
             <g:link
                 action="updateAttendedBy"
                 id="${assistance.id}"
