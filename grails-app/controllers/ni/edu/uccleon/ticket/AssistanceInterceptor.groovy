@@ -4,12 +4,24 @@ class AssistanceInterceptor {
     AssistanceInterceptor() {
         match action: "updateAttendedBy"
         match action: "addTags"
+        match action: "delete"
     }
 
     boolean before() {
-        def assistance = Assistance.get params?.id
+        def id = params.int("id")
+        def assistance = Assistance.get id
 
-        if (assistance && assistance.state == "CLOSED") {
+        if (!assistance) {
+            response.sendError 404
+
+            return false
+        }
+
+        if (actionName == "delete" && assistance.state in ["PROCESS", "CLOSED"]) {
+            redirect action: "binnacle", id: para
+        }
+
+        if (actionName in ["updateAttendedBy", "addTags"] && assistance.state == "CLOSED") {
             redirect action: "binnacle", id: params.id
 
             return false
