@@ -5,7 +5,7 @@
     <g:checkBox
         name="states"
         value="PENDING"
-        checked="${status ? 'PENDING' in states : true}"/>
+        checked="${states ? 'PENDING' in states : request.method == 'GET'}"/>
     <label>Pendiente</label>
 </div>
 
@@ -13,7 +13,7 @@
     <g:checkBox
         name="states"
         value="PROCESS"
-        checked="${status ? 'PROCESS' in states : true}"/>
+        checked="${states ? 'PROCESS' in states : request.method == 'GET'}"/>
     <label>Proceso</label>
 </div>
 
