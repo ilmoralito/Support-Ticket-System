@@ -60,13 +60,9 @@ class Assistance {
             }
         }
 
-        filter { state, attendedBy ->
-            if (state) {
-                "in" "state", state
-            }
-
-            if (attendedBy) {
-                "in" "attendedBy", attendedBy
+        filter { states = null, attendedBy = null ->
+            if (states) {
+                "in" "state", states
             }
         }
     }

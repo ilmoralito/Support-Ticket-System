@@ -104,11 +104,17 @@ class AssistanceController {
 
     @Secured(["ROLE_ADMIN"])
     def application() {
-        def assistances = Assistance.inState(["PENDING", "PROCESS"]).list().groupBy { it.dateCreated.clearTime() }.collect {
-            [dateCreated: it.key, assistances: it.value]
+        def assistances = {
+            if (request.method == "POST") {
+                def states = params.list("states")
+
+                Assistance.filter(states).list()
+            } else {
+                Assistance.inState(["PENDING", "PROCESS"]).list()
+            }
         }
 
-        [assistances: assistances]
+        [assistances: assistances().groupBy { it.dateCreated.clearTime() }.collect { [dateCreated: it.key, assistances: it.value] }]
     }
 
     @Secured(["ROLE_ADMIN"])
