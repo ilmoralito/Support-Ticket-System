@@ -3,17 +3,13 @@ package ni.edu.uccleon.ticket
 class TaskInterceptor {
     def springSecurityService
 
-    TaskInterceptor() {
-        match(action: "updateStatus")
-        match(action: "delete")
-    }
-
     boolean before() {
         def assistanceId = params.int("assistanceId")
-        def userId = springSecurityService.loadCurrentUser().id
-        def isAttendedByCurrentUser = AttendedBy.exists(assistanceId, userId)
+        def assistance = Assistance.get assistanceId
+        def currentUser = springSecurityService.loadCurrentUser()
+        def isAttendedByCurrentUser = AttendedBy.exists(assistanceId, currentUser.id)
 
-        if (!isAttendedByCurrentUser) {
+        if (!isAttendedByCurrentUser || assistance.state == "CLOSED") {
             redirect controller: "assistance", action: "binnacle", id: assistanceId
 
             return false
