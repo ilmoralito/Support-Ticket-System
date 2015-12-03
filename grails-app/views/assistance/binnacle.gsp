@@ -101,35 +101,7 @@
             </g:link>
         </g:if>
 
-        <div class="panel">
-            <h5>DETALLE</h5>
-
-            <h6>Por</h6>
-            <p>${assistance.user.fullName}</p>
-
-            <h6>Departamento</h6>
-            <p>${assistance.user.departments.join(", ")}</p>
-
-            <h6>Estado</h6>
-            <p><ticket:state state="${assistance.state}"/></p>
-
-            <h6>Solicitado</h6>
-            <p>${assistance.dateCreated.format("yyyy-MM-dd")}</p>
-
-            <g:if test="${assistance.attendedBy}">
-                <h6>Actualizado</h6>
-                <p>${assistance.lastUpdated.format("yyyy-MM-dd")}</p>
-
-                <h6>Atendido por</h6>
-                <p>${assistance.attendedBy.user.fullName.join(", ")}</p>
-            </g:if>
-
-            <g:if test="${assistance.state == 'CLOSED'}">
-                <h6>ETIQUETAS</h6>
-
-                <ticket:getAssistanceTags tags="${assistance.tags}"/>
-            </g:if>
-        </div>
+        <g:render template="detail" model="[assistance: assistance]"/>
 
         <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
             <div class="panel" id="listTag">

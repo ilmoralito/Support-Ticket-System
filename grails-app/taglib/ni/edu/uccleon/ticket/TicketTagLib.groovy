@@ -39,7 +39,12 @@ class TicketTagLib {
 
     def getAssistanceTags = { attrs ->
         def tags = attrs.tags
-
-        out << render(template: "/templates/assistanceTags", model: [tags: tags])
+        def mb = new groovy.xml.MarkupBuilder(out)
+        
+        mb.span{
+            tags.each{ tag ->
+                span(class: "label") { mb.yield "${tag.name}" }
+            }
+        }
     }
 }
