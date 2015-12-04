@@ -60,20 +60,24 @@ class Assistance {
             }
         }
 
-        filter { states = null, attendedBy = null ->
+        filter { states, helpers ->
             if (states) {
                 "in" "state", states
+            }
+
+            if (helpers) {
+                attendedBy {
+                    user {
+                        "in" "id", helpers
+                    }
+                }
             }
         }
     }
 
     static belongsTo = [user: User]
 
-    static hasMany = [tags: Tag, tasks: Task]
-
-    Set<AttendedBy> getAttendedBy() {
-        AttendedBy.findAllByAssistance(this)
-    }
+    static hasMany = [tags: Tag, tasks: Task, attendedBy: AttendedBy]
 
     def beforeUpdate() {
         if (isDirty("dateCompleted")) {

@@ -5,11 +5,9 @@ import groovy.transform.ToString
 
 @ToString(cache=true, includeNames=true, includePackage=false)
 class AttendedBy {
-    Assistance assistance
     User user
 
     static constraints = {
-        assistance()
         user validator: { user ->
             user.authorities.authority.contains("ROLE_ADMIN")
         }
@@ -46,6 +44,8 @@ class AttendedBy {
 
         count
     }
+
+    static belongsTo = [assistance: Assistance]
 
     static mapping = { version false }
 }

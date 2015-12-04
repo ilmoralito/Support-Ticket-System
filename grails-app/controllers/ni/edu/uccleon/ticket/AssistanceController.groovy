@@ -110,14 +110,15 @@ class AssistanceController {
         def assistances = {
             if (request.method == "POST") {
                 def states = params.list("states")
+                def attendedBy = params.list("attendedBy")*.toLong()
 
-                Assistance.filter(states).list()
+                Assistance.filter(states, attendedBy).list()
             } else {
                 Assistance.inState(["PENDING", "PROCESS"]).list()
             }
         }
 
-        [assistances: assistances().groupBy { it.dateCreated.clearTime() }.collect { [dateCreated: it.key, assistances: it.value] }]
+        [assistances: assistances()?.groupBy { it.dateCreated.clearTime() }.collect { [dateCreated: it.key, assistances: it.value] }]
     }
 
     @Secured(["ROLE_ADMIN"])
