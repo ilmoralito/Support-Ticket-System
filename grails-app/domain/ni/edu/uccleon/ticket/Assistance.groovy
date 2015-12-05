@@ -60,7 +60,7 @@ class Assistance {
             }
         }
 
-        filter { stateList, attendedByList, departmentList ->
+        filter { stateList, attendedByList, departmentList, tagList ->
             if (stateList) {
                 "in" "state", stateList
             }
@@ -78,6 +78,12 @@ class Assistance {
                 createAlias "u.departments", "d"
                 
                 "in" "d.elements", departmentList
+            }
+
+            if (tagList) {
+                tags {
+                    "in" "name", tagList
+                }
             }
         }
     }

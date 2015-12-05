@@ -112,8 +112,9 @@ class AssistanceController {
                 def states = params.list("states")
                 def attendedBy = params.list("attendedBy")*.toLong()
                 def departments = params.list("departments")
+                def tags = params.list("tags")
 
-                Assistance.filter(states, attendedBy, departments).list()
+                Assistance.filter(states, attendedBy, departments, tags).list()
             } else {
                 Assistance.inState(["PENDING", "PROCESS"]).list()
             }

@@ -58,6 +58,9 @@
 
             <ticket:renderDepartments/>
 
+            <h5>Etiquetas</h5>
+            <ticket:getTags tagList="${params.list('tags')}"/>
+
             <g:submitButton name="filter" value="Filtrar" class="button expand"/>
         </g:form>
     </content>

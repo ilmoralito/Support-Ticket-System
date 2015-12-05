@@ -1,10 +1,10 @@
-<g:each in="${tags}" var="t">
+<g:each in="${tags}" var="tag">
     <div>
         <g:checkBox
-            id="${t.name}"
+            id="${tag.name}"
             name="tags"
-            value="${t.name}"
-            checked="${t.name in assistance.tags.name}"/>
-        <label>${t.name}</label>
+            value="${tag.name}"
+            checked="${tag.name in tagList}"/>
+        <label>${tag.name}</label>
     </div>
 </g:each>

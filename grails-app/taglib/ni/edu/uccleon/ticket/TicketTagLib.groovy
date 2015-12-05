@@ -2,7 +2,6 @@ package ni.edu.uccleon.ticket
 
 class TicketTagLib {
     def userService
-    def tagService
     def departmentService
 
     static namespace = "ticket"
@@ -25,10 +24,11 @@ class TicketTagLib {
         out << render(template: "/templates/usersByRole", model: [users: users])
     }
 
-    def getTags = {
-        def tags = tagService.tags
+    def getTags = { attrs ->
+        def tags = Tag.list()
+        def tagList = attrs.tagList
 
-        out << render(template: "/templates/tags", model: [tags: tags])
+        out << render(template: "/templates/tags", model: [tags: tags, tagList: tagList])
     }
 
     def taskStatus = { attrs ->

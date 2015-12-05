@@ -109,7 +109,7 @@
 
                 <g:form action="addTags">
                     <g:hiddenField name="id" value="${assistance.id}"/>
-                    <ticket:getTags/>
+                    <ticket:getTags tagList="${assistance?.tags?.name}"/>
                 
                     <g:submitButton name="send" value="Agregar" class="button tiny expand" style="margin-bottom: 3px;"/>
                 </g:form>
