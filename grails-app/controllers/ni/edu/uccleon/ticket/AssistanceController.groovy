@@ -111,8 +111,9 @@ class AssistanceController {
             if (request.method == "POST") {
                 def states = params.list("states")
                 def attendedBy = params.list("attendedBy")*.toLong()
+                def departments = params.list("departments")
 
-                Assistance.filter(states, attendedBy).list()
+                Assistance.filter(states, attendedBy, departments).list()
             } else {
                 Assistance.inState(["PENDING", "PROCESS"]).list()
             }

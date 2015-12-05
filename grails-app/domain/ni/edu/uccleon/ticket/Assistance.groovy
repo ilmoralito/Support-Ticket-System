@@ -60,17 +60,24 @@ class Assistance {
             }
         }
 
-        filter { states, helpers ->
-            if (states) {
-                "in" "state", states
+        filter { stateList, attendedByList, departmentList ->
+            if (stateList) {
+                "in" "state", stateList
             }
 
-            if (helpers) {
+            if (attendedByList) {
                 attendedBy {
                     user {
-                        "in" "id", helpers
+                        "in" "id", attendedByList
                     }
                 }
+            }
+
+            if (departmentList) {
+                createAlias "user", "u"
+                createAlias "u.departments", "d"
+                
+                "in" "d.elements", departmentList
             }
         }
     }
