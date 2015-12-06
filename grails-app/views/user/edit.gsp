@@ -10,6 +10,9 @@
             <g:hiddenField name="id" value="${user?.id}"/>
             <g:render template="form"/>
 
+            <h5>Departamentos</h5>
+            <ticket:renderDepartments departmentList="${user?.departments}"/>
+
             <g:submitButton name="send" value="Confirmar" class="button"/>
         </g:form>
 

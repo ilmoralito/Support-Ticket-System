@@ -18,5 +18,3 @@
         checked="${shouldCheck}"/>
     <label>${grailsApplication.config.ni.edu.uccleon.ticket.rolesNickname[role.authority]}</label>
 </g:each>
-
-<ticket:renderDepartments/>

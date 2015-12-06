@@ -21,8 +21,3 @@ ni.edu.uccleon.ticket.rolesNickname = [
 	ROLE_ADMIN: "Administrador",
 	ROLE_USER: "Usuario"
 ]
-
-ni.edu.uccleon.ticket.departmentsNickname = [
-	Academic: "Academico",
-	Administrative: "Administrativo"
-]

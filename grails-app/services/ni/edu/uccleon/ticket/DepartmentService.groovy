@@ -9,11 +9,11 @@ class DepartmentService {
 
     def getDepartments(Integer max = 25) {
         def rest = new RestBuilder()
-        def departments = rest.get("$departmentsQueryUrl?max=$max").json
-        def data = departments.groupBy { it.area }.collect { department ->
-            [ area: department.key, data: department.value.name ]
+        def json = rest.get("$departmentsQueryUrl?max=$max").json
+        def departments = json.groupBy { it.area }.collect { department ->
+            [ area: department.key, departments: department.value.name ]
         }
 
-        data
+        departments
     }
 }

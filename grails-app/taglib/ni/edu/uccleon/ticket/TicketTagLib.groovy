@@ -12,10 +12,27 @@ class TicketTagLib {
         out << states[attrs.state]
     }
 
-    def renderDepartments = { attrs, body ->
-        def departments = departmentService.departments
+    def renderDepartments = { attrs ->
+        List departments = departmentService.departments
+        List departmentList = attrs.departmentList
+        Map departmentsNickname = [ Academic: "Academico", Administrative: "Administrativo" ]
+        Map checkboxParams = [ type: "checkbox", name: "departments" ]
+        def mb = new groovy.xml.MarkupBuilder(out)
 
-        out << render(template: "/templates/departments", model: [departments: departments])
+        departments.each { department ->
+            mb.h6 { yield departmentsNickname[department.area] }
+
+            department.departments.each { d ->
+                checkboxParams.value = d
+
+                d in departmentList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+
+                mb.div {
+                    input(checkboxParams)
+                    label(for: d) { yield d }
+                }
+            }
+        }
     }
 
     def usersByRole = { attrs ->
@@ -40,7 +57,6 @@ class TicketTagLib {
                 label(for: tag.name) { yield tag.name }
             }
         }
-        //out << render(template: "/templates/tags", model: [tags: tags, tagList: tagList])
     }
 
     def taskStatus = { attrs ->

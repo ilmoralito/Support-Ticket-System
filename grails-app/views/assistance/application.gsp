@@ -56,7 +56,8 @@
 
             <g:render template="filterForm"/>
 
-            <ticket:renderDepartments/>
+            <h5>Departamentos</h5>
+            <ticket:renderDepartments departmentList="${params.list('departments')}"/>
 
             <h5>Etiquetas</h5>
             <ticket:getTags tagList="${params.list('tags')}"/>

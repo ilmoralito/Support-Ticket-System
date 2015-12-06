@@ -9,6 +9,9 @@
         <g:form action="create" autocomplete="off">
             <g:render template="form"/>
 
+            <h5>Departamentos</h5>
+            <ticket:renderDepartments departmentList="${params.list('departments')}"/>
+
             <g:submitButton name="send" value="Confirmar" class="button"/>
         </g:form>
 
