@@ -36,9 +36,22 @@ class TicketTagLib {
     }
 
     def usersByRole = { attrs ->
-        def users = userService.getUsersByRole(attrs.role)
+        List userList = attrs.userList*.toLong()
+        List users = userService.getUsersByRole(attrs.role)
+        Map checkboxParams = [ type: "checkbox", name: attrs.name ]
+        def mb = new groovy.xml.MarkupBuilder(out)
 
-        out << render(template: "/templates/usersByRole", model: [users: users])
+        users.each { user ->
+            checkboxParams.value = user.id
+            checkboxParams.id = user.id
+
+            user.id in userList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+
+            mb.div {
+                input(checkboxParams)
+                label(for: user.id) { yield user.fullName }
+            }
+        }
     }
 
     def getTags = { attrs ->
