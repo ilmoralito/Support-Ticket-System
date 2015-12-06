@@ -27,8 +27,20 @@ class TicketTagLib {
     def getTags = { attrs ->
         def tags = Tag.list()
         def tagList = attrs.tagList
+        def checkboxParams = [type: "checkbox", name: "tags"]
+        def mb = new groovy.xml.MarkupBuilder(out)
 
-        out << render(template: "/templates/tags", model: [tags: tags, tagList: tagList])
+        tags.each { tag ->
+            mb.div {
+                checkboxParams.value = tag.name
+
+                tag.name in tagList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+
+                input(checkboxParams)
+                label(for: tag.name) { yield tag.name }
+            }
+        }
+        //out << render(template: "/templates/tags", model: [tags: tags, tagList: tagList])
     }
 
     def taskStatus = { attrs ->
