@@ -27,10 +27,10 @@ class AssistanceController {
 
         def assistances = {
             if (request.method == "POST") {
-                def state = params.list("state")
-                def attendedBy = params.list("attendedBy").collect { User.get it }
+                def states = params.list("states")
+                def attendedBy = params.list("attendedBy")*.toLong()
 
-                Assistance.byCurrentUser().filter(state, attendedBy).list()
+                Assistance.byCurrentUser().filter(states, attendedBy, null, null).list()
             } else {
                 Assistance.byCurrentUser().inState(["PENDING", "PROCESS"]).list()
             }
