@@ -16,7 +16,7 @@ class Assistance {
     static constraints = {
         description blank: false, maxSize: 140
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
-        type inList: ["PROGRAMED", "NO PROGRAMED"], maxSize: 100
+        type inList: ["PROGRAMMED", "NON-SCHEDULED"], maxSize: 100
         dateCompleted nullable: true, validator: { dateCompleted, assistance ->
             if (dateCompleted) {
                 def now = new Date().clearTime()
@@ -58,7 +58,7 @@ class Assistance {
             "in" "state", stateList
         }
 
-        filter { stateList, attendedByList, departmentList, tagList ->
+        filter { stateList, attendedByList, departmentList, tagList, typeList ->
             if (stateList) {
                 byState stateList
             }
@@ -83,6 +83,10 @@ class Assistance {
                     "in" "name", tagList
                 }
             }
+
+            if (typeList) {
+                "in" "type", typeList
+            }
         }
     }
 
@@ -91,7 +95,7 @@ class Assistance {
     static hasMany = [tags: Tag, tasks: Task, attendedBy: AttendedBy]
 
     def beforeValidate() {
-        type = user.authorities.authority.contains("ROLE_ADMIN") ? "PROGRAMED" : "NO PROGRAMED"
+        type = user.authorities.authority.contains("ROLE_ADMIN") ? "PROGRAMMED" : "NON-SCHEDULED"
     }
 
     def beforeUpdate() {

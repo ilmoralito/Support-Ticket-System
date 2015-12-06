@@ -85,7 +85,13 @@ class BootStrap {
 
 		AttendedBy.create assistance4, admin1User
 
-		assert Assistance.count() == 4
+		def assistance5 = new Assistance("This wiki is licensed under a Creative Commons")
+
+		admin1User.addToAssistances assistance5
+
+		assistance5.save failOnError: true
+
+		assert Assistance.count() == 5
 
 		// tag
 		def printer = new Tag(name:"Impresora").save failOnError: true

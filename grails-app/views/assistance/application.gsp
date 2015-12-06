@@ -61,6 +61,9 @@
             <h5>Etiquetas</h5>
             <ticket:getTags tagList="${params.list('tags')}"/>
 
+            <h5>Tipo</h5>
+            <ticket:getAssistanceTypes types="${params.list('types')}"/>
+
             <g:submitButton name="filter" value="Filtrar" class="button expand"/>
         </g:form>
     </content>

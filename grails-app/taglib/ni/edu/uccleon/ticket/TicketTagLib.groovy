@@ -47,4 +47,23 @@ class TicketTagLib {
             }
         }
     }
+
+    def getAssistanceTypes = { attrs ->
+        List types = attrs.types
+        def mb = new groovy.xml.MarkupBuilder(out)
+        Map checkboxParams = [type: "checkbox", id: "PROGRAMMED", name: "types", value: "PROGRAMMED"]
+        Map assistanceTypeNicknames = [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado"]
+
+        if ("PROGRAMMED" in types) checkboxParams.checked = true
+
+        mb.div {
+            input(checkboxParams)
+            label(for: "PROGRAMMED") { mb.yield assistanceTypeNicknames["PROGRAMMED"] }
+        }
+
+        mb.div {
+            mkp.yieldUnescaped g.checkBox(type: "checkbox", id: "NON-SCHEDULED", name: "types", value: "NON-SCHEDULED", checked: "NON-SCHEDULED" in types)
+            label(for: "NON-SCHEDULED") { mb.yield assistanceTypeNicknames["NON-SCHEDULED"] }
+        }
+    }
 }
