@@ -6,6 +6,7 @@ import groovy.transform.ToString
 class Assistance {
     String description
     String state = "PENDING"
+    String type
     Date dateCompleted
     SortedSet tags
 
@@ -15,6 +16,7 @@ class Assistance {
     static constraints = {
         description blank: false, maxSize: 140
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
+        type inList: ["PROGRAMED", "NO PROGRAMED"], maxSize: 100
         dateCompleted nullable: true, validator: { dateCompleted, assistance ->
             if (dateCompleted) {
                 def now = new Date().clearTime()
@@ -53,11 +55,7 @@ class Assistance {
         }
 
         inState { states ->
-            if (states instanceof List) {
-                "in" "state", states
-            } else {
-                eq "state", states
-            }
+            "in" "state", states
         }
 
         filter { stateList, attendedByList, departmentList, tagList ->
@@ -91,6 +89,10 @@ class Assistance {
     static belongsTo = [user: User]
 
     static hasMany = [tags: Tag, tasks: Task, attendedBy: AttendedBy]
+
+    def beforeValidate() {
+        type = user.authorities.authority.contains("ROLE_ADMIN") ? "PROGRAMED" : "NO PROGRAMED"
+    }
 
     def beforeUpdate() {
         if (isDirty("dateCompleted")) {
