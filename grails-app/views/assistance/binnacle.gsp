@@ -75,9 +75,9 @@
                         </small>
                     </div>
 
-                    <g:set var="html" value="${asciidoctor.convert(task.description, new HashMap<String, Object>())}"/>
-
-                    <p>${raw(html)}</p>
+                    <p>
+                        <assistance:renderFromAsciidoctorToHTML description="${task.description}"/>
+                    </p>
                 </div>
             </g:each>
         </g:if>

@@ -1,8 +1,6 @@
 package ni.edu.uccleon.ticket
 
 import grails.plugin.springsecurity.annotation.Secured
-import static org.asciidoctor.Asciidoctor.Factory.create;
-import org.asciidoctor.Asciidoctor;
 
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class AssistanceController {
@@ -128,7 +126,6 @@ class AssistanceController {
     @Secured(["ROLE_ADMIN"])
     def binnacle(Long id) {
         Assistance assistance = Assistance.get id
-        Asciidoctor asciidoctor = create();
 
         if (!assistance) {
             response.sendError 404
@@ -137,8 +134,7 @@ class AssistanceController {
         [
             assistance: assistance,
             isAttendedByCurrentUser: AttendedBy.exists(id, springSecurityService.loadCurrentUser().id),
-            tasks: assistance.tasks,
-            asciidoctor: asciidoctor
+            tasks: assistance.tasks
         ]
     }
 
