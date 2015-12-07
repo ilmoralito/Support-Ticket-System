@@ -12,6 +12,9 @@
                 <g:render template="form"/>
 
                 <g:submitButton name="send" value="Confirmar" class="button"/>
+                <g:link action="delete" id="${assistance?.id}" class="button alert right">
+                    Eliminar
+                </g:link>
             </g:form>
         </g:if>
         <g:else>
@@ -27,10 +30,6 @@
                 </div>
             </div>
         </g:else>
-
-        <g:if test="${!assistance.attendedBy}">
-            <g:link action="delete" id="${assistance?.id}" class="button alert right">Eliminar</g:link>
-        </g:if>
 
         <g:hasErrors bean="${assistance}">
             <g:renderErrors bean="${assistance}"/>

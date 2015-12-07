@@ -28,7 +28,7 @@
         </g:if>
     </g:if>
 
-    <g:if test="${assistance.state == 'CLOSED'}">
+    <g:if test="${assistance.tags}">
         <h6>ETIQUETAS</h6>
     
         <ticket:getAssistanceTags tags="${assistance.tags}"/>
