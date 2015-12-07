@@ -51,23 +51,22 @@
     </content>
     <content tag="sidebar">
         <g:form action="application" autocomplete="off">
-            <h5>Filtros</h5>
-
-            <h6>Atendidos por</h6>
+            <h5 class="filter-header">Atendidos por</h5>
             <ticket:usersByRole roles="['ROLE_ADMIN']" name="attendedBy" userList="${params.list('attendedBy')}"/>
 
+            <h5 class="filter-header">Estado</h5>
             <g:render template="filterForm"/>
 
-            <h5>Departamentos</h5>
+            <h5 class="filter-header">Departamentos</h5>
             <ticket:renderDepartments departmentList="${params.list('departments')}"/>
 
-            <h5>Etiquetas</h5>
+            <h5 class="filter-header">Etiquetas</h5>
             <ticket:getTags tagList="${params.list('tags')}"/>
 
-            <h5>Tipo</h5>
+            <h5 class="filter-header">Tipo</h5>
             <ticket:getAssistanceTypes types="${params.list('types')}"/>
 
-            <h5>Solicitado por</h5>
+            <h5 class="filter-header">Solicitado por</h5>
             <ticket:usersByRole roles="['ROLE_ADMIN', 'ROLE_USER']" name="users" userList="${params.list('users')}"/>
 
             <g:submitButton name="filter" value="Filtrar" class="button expand"/>

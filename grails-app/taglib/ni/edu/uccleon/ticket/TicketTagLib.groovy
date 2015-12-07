@@ -21,17 +21,21 @@ class TicketTagLib {
         Map checkboxParams = [ type: "checkbox", name: "departments" ]
         def mb = new MarkupBuilder(out)
 
-        departments.each { department ->
-            mb.h6 { yield departmentsNickname[department.area] }
+        mb.div {
+            departments.each { department ->
+                h6 { mb.yield departmentsNickname[department.area] }
 
-            department.departments.each { d ->
-                checkboxParams.value = d
+                div {
+                    department.departments.each { d ->
+                        checkboxParams.value = d
 
-                d in departmentList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+                        d in departmentList ? checkboxParams.checked = true : checkboxParams.remove("checked")
 
-                mb.div {
-                    input(checkboxParams)
-                    label(for: d) { yield d }
+                        div {
+                            input(checkboxParams)
+                            label(for: d) { mb.yield d }
+                        }
+                    }
                 }
             }
         }
@@ -43,15 +47,17 @@ class TicketTagLib {
         Map checkboxParams = [ type: "checkbox", name: attrs.name ]
         def mb = new MarkupBuilder(out)
 
-        users.each { user ->
-            checkboxParams.value = user.id
-            checkboxParams.id = user.id
+        mb.div {
+            users.each { user ->
+                checkboxParams.value = user.id
+                checkboxParams.id = user.id
 
-            user.id in userList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+                user.id in userList ? checkboxParams.checked = true : checkboxParams.remove("checked")
 
-            mb.div {
-                input(checkboxParams)
-                label(for: user.id) { yield user.fullName }
+                div {
+                    input(checkboxParams)
+                    label(for: user.id) { mb.yield user.fullName }
+                }
             }
         }
     }
@@ -62,14 +68,16 @@ class TicketTagLib {
         def checkboxParams = [type: "checkbox", name: "tags"]
         def mb = new MarkupBuilder(out)
 
-        tags.each { tag ->
-            mb.div {
-                checkboxParams.value = tag.name
+        mb.div {
+            tags.each { tag ->
+                div {
+                    checkboxParams.value = tag.name
 
-                tag.name in tagList ? checkboxParams.checked = true : checkboxParams.remove("checked")
+                    tag.name in tagList ? checkboxParams.checked = true : checkboxParams.remove("checked")
 
-                input(checkboxParams)
-                label(for: tag.name) { yield tag.name }
+                    input(checkboxParams)
+                    label(for: tag.name) { yield tag.name }
+                }
             }
         }
     }
@@ -100,13 +108,15 @@ class TicketTagLib {
         if ("PROGRAMMED" in types) checkboxParams.checked = true
 
         mb.div {
-            input(checkboxParams)
-            label(for: "PROGRAMMED") { mb.yield assistanceTypeNicknames["PROGRAMMED"] }
-        }
+            div {
+                input(checkboxParams)
+                label(for: "PROGRAMMED") { mb.yield assistanceTypeNicknames["PROGRAMMED"] }
+            }
 
-        mb.div {
-            mkp.yieldUnescaped g.checkBox(type: "checkbox", id: "NON-SCHEDULED", name: "types", value: "NON-SCHEDULED", checked: "NON-SCHEDULED" in types)
-            label(for: "NON-SCHEDULED") { mb.yield assistanceTypeNicknames["NON-SCHEDULED"] }
+            div {
+                mkp.yieldUnescaped g.checkBox(type: "checkbox", id: "NON-SCHEDULED", name: "types", value: "NON-SCHEDULED", checked: "NON-SCHEDULED" in types)
+                label(for: "NON-SCHEDULED") { mb.yield assistanceTypeNicknames["NON-SCHEDULED"] }
+            }
         }
     }
 }

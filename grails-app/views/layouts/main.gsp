@@ -6,7 +6,6 @@
         <title><g:layoutTitle default="Support Ticket System"/></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet src="application.css"/>
-        <!--<asset:javascript src="application.js"/>-->
         <g:layoutHead/>
     </head>
     <body>
@@ -55,5 +54,6 @@
         <div class="row">
             <g:layoutBody/>
         </div>
+        <asset:javascript src="application.js"/>
     </body>
 </html>

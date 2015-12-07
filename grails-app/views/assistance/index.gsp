@@ -44,9 +44,10 @@
     </content>
     <content tag="sidebar">
         <g:form action="index" autocomplete="off">
-            <h6>Atendidos por</h6>
+            <h5>Atendidos por</h5>
             <ticket:usersByRole roles="['ROLE_ADMIN']" name="attendedBy" userList="${params.list('attendedBy')}"/>
 
+            <h5>Estado</h5>
             <g:render template="filterForm"/>
 
             <g:submitButton name="send" value="Filtrar" class="button expand"/>
