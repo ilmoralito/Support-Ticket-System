@@ -54,7 +54,7 @@
             <h5>Filtros</h5>
 
             <h6>Atendidos por</h6>
-            <ticket:usersByRole role="ROLE_ADMIN" name="attendedBy" userList="${params.list('attendedBy')}"/>
+            <ticket:usersByRole roles="['ROLE_ADMIN']" name="attendedBy" userList="${params.list('attendedBy')}"/>
 
             <g:render template="filterForm"/>
 
@@ -66,6 +66,9 @@
 
             <h5>Tipo</h5>
             <ticket:getAssistanceTypes types="${params.list('types')}"/>
+
+            <h5>Solicitado por</h5>
+            <ticket:usersByRole roles="['ROLE_ADMIN', 'ROLE_USER']" name="users" userList="${params.list('users')}"/>
 
             <g:submitButton name="filter" value="Filtrar" class="button expand"/>
         </g:form>

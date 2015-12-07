@@ -30,7 +30,7 @@ class AssistanceController {
                 def states = params.list("states")
                 def attendedBy = params.list("attendedBy")*.toLong()
 
-                Assistance.byCurrentUser().filter(states, attendedBy, null, null, null).list()
+                Assistance.byCurrentUser().filter(states, attendedBy, null, null, null, null).list()
             } else {
                 Assistance.byCurrentUser().byState(["PENDING", "PROCESS"]).list()
             }
@@ -114,8 +114,9 @@ class AssistanceController {
                 def departments = params.list("departments")
                 def tags = params.list("tags")
                 def types = params.list("types")
+                def users = params.list("users")*.toLong()
 
-                Assistance.filter(states, attendedBy, departments, tags, types).list()
+                Assistance.filter(states, attendedBy, departments, tags, types, users).list()
             } else {
                 Assistance.byState(["PENDING", "PROCESS"]).list()
             }

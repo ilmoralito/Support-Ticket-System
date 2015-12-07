@@ -45,7 +45,7 @@
     <content tag="sidebar">
         <g:form action="index" autocomplete="off">
             <h6>Atendidos por</h6>
-            <ticket:usersByRole role="ROLE_ADMIN" name="attendedBy" userList="${params.list('attendedBy')}"/>
+            <ticket:usersByRole roles="['ROLE_ADMIN']" name="attendedBy" userList="${params.list('attendedBy')}"/>
 
             <g:render template="filterForm"/>
 

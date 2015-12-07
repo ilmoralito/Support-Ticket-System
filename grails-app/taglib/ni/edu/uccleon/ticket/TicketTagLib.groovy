@@ -1,5 +1,7 @@
 package ni.edu.uccleon.ticket
 
+import groovy.xml.*
+
 class TicketTagLib {
     def userService
     def departmentService
@@ -17,7 +19,7 @@ class TicketTagLib {
         List departmentList = attrs.departmentList
         Map departmentsNickname = [ Academic: "Academico", Administrative: "Administrativo" ]
         Map checkboxParams = [ type: "checkbox", name: "departments" ]
-        def mb = new groovy.xml.MarkupBuilder(out)
+        def mb = new MarkupBuilder(out)
 
         departments.each { department ->
             mb.h6 { yield departmentsNickname[department.area] }
@@ -37,9 +39,9 @@ class TicketTagLib {
 
     def usersByRole = { attrs ->
         List userList = attrs.userList*.toLong()
-        List users = userService.getUsersByRole(attrs.role)
+        List<User> users = userService.getUsersByRole(attrs.roles)
         Map checkboxParams = [ type: "checkbox", name: attrs.name ]
-        def mb = new groovy.xml.MarkupBuilder(out)
+        def mb = new MarkupBuilder(out)
 
         users.each { user ->
             checkboxParams.value = user.id
@@ -58,7 +60,7 @@ class TicketTagLib {
         def tags = Tag.list()
         def tagList = attrs.tagList
         def checkboxParams = [type: "checkbox", name: "tags"]
-        def mb = new groovy.xml.MarkupBuilder(out)
+        def mb = new MarkupBuilder(out)
 
         tags.each { tag ->
             mb.div {
@@ -80,7 +82,7 @@ class TicketTagLib {
 
     def getAssistanceTags = { attrs ->
         def tags = attrs.tags
-        def mb = new groovy.xml.MarkupBuilder(out)
+        def mb = new MarkupBuilder(out)
         
         mb.span{
             tags.each{ tag ->
@@ -91,7 +93,7 @@ class TicketTagLib {
 
     def getAssistanceTypes = { attrs ->
         List types = attrs.types
-        def mb = new groovy.xml.MarkupBuilder(out)
+        def mb = new MarkupBuilder(out)
         Map checkboxParams = [type: "checkbox", id: "PROGRAMMED", name: "types", value: "PROGRAMMED"]
         Map assistanceTypeNicknames = [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado"]
 

@@ -58,7 +58,7 @@ class Assistance {
             "in" "state", stateList
         }
 
-        filter { stateList, attendedByList, departmentList, tagList, typeList ->
+        filter { stateList, attendedByList, departmentList, tagList, typeList, userList ->
             if (stateList) {
                 byState stateList
             }
@@ -86,6 +86,12 @@ class Assistance {
 
             if (typeList) {
                 "in" "type", typeList
+            }
+
+            if (userList) {
+                user {
+                    "in" "id", userList
+                }
             }
         }
     }
