@@ -41,4 +41,8 @@ class AssistanceService {
 
         grouped
     }
+
+    def getResumeDetail(Integer year, String month) {
+        
+    }
 }

@@ -119,4 +119,21 @@ class TicketTagLib {
             }
         }
     }
+
+    def printResume = { attrs ->
+        String action = attrs.action
+        Map params = attrs.params
+        MarkupBuilder builder = new MarkupBuilder(out)
+        Map linkParams = [action: action, class: "button small right"]
+        
+        if (params) {
+            linkParams.params = params
+        }
+
+        builder.div {
+            mkp.yieldUnescaped g.link(linkParams) { 
+                "Imprimir"
+            }
+        }
+     }
 }

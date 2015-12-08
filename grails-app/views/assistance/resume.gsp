@@ -4,11 +4,7 @@
     </head>
 
     <content tag="main">
-        <div>
-            <g:link action="printResume" class="button small right">
-                <i class="fi-print"></i> Imprimir
-            </g:link>
-        </div>
+        <ticket:printResume action="printResume"/>
 
         <div class="clearfix"></div>
 

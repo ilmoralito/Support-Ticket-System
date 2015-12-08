@@ -228,6 +228,6 @@ class AssistanceController {
 
     @Secured(["ROLE_ADMIN"])
     def resumeDetail(Integer year, String month) {
-        // TODO
+        [assistances: assistanceService.getResumeDetail(year, month)]
     }
 }
