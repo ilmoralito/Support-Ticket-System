@@ -6,6 +6,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class AssistanceController {
     def springSecurityService
     def userService
+    def assistanceService
 
     static allowedMethods = [
         index: ["GET", "POST"],
@@ -17,7 +18,10 @@ class AssistanceController {
         binnacle: ["GET", "POST"],
         updateAttendedBy: "GET",
         addTags: "POST",
-        setOrUnsetDateCompleted: "GET"
+        setOrUnsetDateCompleted: "GET",
+        resume: "GET",
+        printResume: "GET",
+        resumeDetail: "GET"
     ]
 
     def index() {
@@ -209,5 +213,21 @@ class AssistanceController {
         }
 
         redirect action: "binnacle", id: id
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def resume() {
+        [assistances: assistanceService.resume]
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def printResume() {
+        List assistances = assistanceService.resume
+        // TODO
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def resumeDetail(Integer year, String month) {
+        // TODO
     }
 }

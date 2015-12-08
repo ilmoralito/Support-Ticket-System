@@ -22,6 +22,16 @@
                       <section class="top-bar-section">
                         <ul class="right">
                             <sec:ifAllGranted roles="ROLE_ADMIN">
+                                <li class="has-dropdown">
+                                    <a href="#">Reportes</a>
+                                    <ul class="dropdown">
+                                        <li class="${actionName == 'resume' ? 'active' : ''}">
+                                            <g:link action="resume">
+                                                Resumen
+                                            </g:link>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li class="${controllerName == 'assistance' && actionName in ['application', 'binnacle'] ? 'active' : ''}">
                                     <g:link controller="assistance" action="application">
                                         Solicitudes
@@ -29,7 +39,7 @@
                                     </g:link>
                                 </li>
                             </sec:ifAllGranted>
-                            <li class="${controllerName == 'assistance' && !(actionName in ['application', 'binnacle'])  ? 'active' : ''}">
+                            <li class="${controllerName == 'assistance' && !(actionName in ['application', 'binnacle', 'resume'])  ? 'active' : ''}">
                                 <g:link controller="assistance">Asistencias</g:link>
                             </li>
                             <li class="has-dropdown">
