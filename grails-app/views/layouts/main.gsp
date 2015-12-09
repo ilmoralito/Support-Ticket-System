@@ -22,15 +22,11 @@
                       <section class="top-bar-section">
                         <ul class="right">
                             <sec:ifAllGranted roles="ROLE_ADMIN">
-                                <li class="has-dropdown ${actionName in ['resume', 'resumeDetail'] ? 'active' : ''}">
-                                    <a href="#">Reportes</a>
-                                    <ul class="dropdown">
-                                        <li>
-                                            <g:link action="resume">
-                                                Resumen
-                                            </g:link>
-                                        </li>
-                                    </ul>
+                                <li class="${actionName in ['resume', 'resumeDetail'] ? 'active' : ''}">
+                                    <g:link action="resume">
+                                        Resumen
+                                    </g:link>
+                                </li>
                                 </li>
                                 <li class="${controllerName == 'assistance' && actionName in ['application', 'binnacle'] ? 'active' : ''}">
                                     <g:link controller="assistance" action="application">
