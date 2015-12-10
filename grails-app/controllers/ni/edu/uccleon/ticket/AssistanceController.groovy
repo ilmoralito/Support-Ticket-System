@@ -1,6 +1,7 @@
 package ni.edu.uccleon.ticket
 
 import grails.plugin.springsecurity.annotation.Secured
+import com.craigburke.document.builder.PdfDocumentBuilder
 
 @Secured(["ROLE_ADMIN", "ROLE_USER"])
 class AssistanceController {
@@ -223,11 +224,64 @@ class AssistanceController {
     @Secured(["ROLE_ADMIN"])
     def printResume() {
         List assistances = assistanceService.resume
-        // TODO
+        PdfDocumentBuilder pdfBuilder = new PdfDocumentBuilder(response.outputStream)
+
+        Closure customTemplate = {
+            "document" font: [ family: "Helvetica", size: 8.pt]
+        }
+
+        pdfBuilder.create {
+            document (
+                template: customTemplate,
+                header: { info ->
+                    paragraph "Impreso: ${info.dateGenerated.format('yyyy-MM-dd hh:mm')}"
+                }
+            ) {
+                assistances.each { assistance ->
+                    paragraph(align: "center", margin: [top: 0.inches]) {
+                        text "RESUMEN ASISTENCIAS ${assistance.year}"
+                    }
+
+                    assistance.months.each { m ->
+                        table(margin: [top: 0.inches, bottom: 0.inches]) {
+                            row {
+                                cell "Mes"
+                                cell "Programados"
+                                cell "No programados"
+                                cell "Total"
+                            }
+
+                            row {
+                                cell m.month
+                                cell m.programmed
+                                cell m.nonscheduled
+                                cell m.total
+                            }
+                        }
+                    }
+
+                    table(margin: [top: 0.inches]) {
+                        row {
+                            cell "TOTAL"
+                            cell assistance.months.programmed.sum()
+                            cell assistance.months.nonscheduled.sum()
+                            cell assistance.months.programmed.sum() + assistance.months.nonscheduled.sum()
+                        }
+                    }
+                }
+            }
+        }
+
+        response.contentType = "application/pdf"
+        response.setHeader("Content-disposition", "attachment;filename=adiosMuchachos.pdf")
+        response.outputStream << out.toByteArray()
+        response.outputStream.flush()
     }
 
     @Secured(["ROLE_ADMIN"])
     def resumeDetail(Integer year, String month) {
-        [assistances: assistanceService.getResumeDetail(year, month)]
+        List byDepartments = assistanceService.getResumeDetail(year, month)
+
+        [byDepartments: byDepartments]
     }
 }
