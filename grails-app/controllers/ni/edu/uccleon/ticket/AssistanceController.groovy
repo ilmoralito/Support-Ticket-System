@@ -242,8 +242,8 @@ class AssistanceController {
                         text "RESUMEN ASISTENCIAS ${assistance.year}"
                     }
 
-                    assistance.months.each { m ->
-                        table(margin: [top: 0.inches, bottom: 0.inches]) {
+                    table(margin: [top: 0.inches, bottom: 0.inches]) {
+                        assistance.months.each { m ->
                             row {
                                 cell "Mes"
                                 cell "Programados"
@@ -258,9 +258,7 @@ class AssistanceController {
                                 cell m.total
                             }
                         }
-                    }
 
-                    table(margin: [top: 0.inches]) {
                         row {
                             cell "TOTAL"
                             cell assistance.months.programmed.sum()
