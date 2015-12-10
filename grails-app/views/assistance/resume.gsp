@@ -12,19 +12,19 @@
             <g:each in="${assistances}" var="assistance">
                 <caption>RESUMEN ASISTENCIAS ${assistance.year}</caption>
 
-                <g:each in="${assistances.months}" var="month">
-                    <table width="100%">
-                        <thead>
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th>Mes</th>
+                            <th>Programados</th>
+                            <th>No programados</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <g:each in="${assistances.months}" var="month">
                             <tr>
-                                <th>Mes</th>
-                                <th>Programados</th>
-                                <th>No programados</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td width="20%">
+                                <td>
                                     <g:link
                                         action="resumeDetail"
                                         params="[year: assistance.year, month: month[0].month]">
@@ -35,16 +35,15 @@
                                 <td>${month[0].nonscheduled}</td>
                                 <td>${month[0].total}</td>
                             </tr>
-
-                            <tr>
-                                <td>TOTAL</td>
-                                <td>${month.programmed.sum()}</td>
-                                <td>${month.nonscheduled.sum()}</td>
-                                <td>${month.programmed.sum() + month.nonscheduled.sum()}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </g:each>
+                        </g:each>
+                        <tr>
+                            <td>TOTAL</td>
+                            <td>${assistance.months.programmed.sum()}</td>
+                            <td>${assistance.months.nonscheduled.sum()}</td>
+                            <td>${assistance.months.programmed.sum() + assistance.months.nonscheduled.sum()}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </g:each>
         </g:if>
         <g:else>
