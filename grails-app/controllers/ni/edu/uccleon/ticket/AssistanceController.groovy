@@ -278,7 +278,7 @@ class AssistanceController {
 
     @Secured(["ROLE_ADMIN"])
     def resumeDetail(Integer year, String month) {
-        Map byDepartments = assistanceService.getResumeDetail(year, month)
+        List byDepartments = assistanceService.getResumeDetail(year, month)
 
         [byDepartments: byDepartments]
     }
