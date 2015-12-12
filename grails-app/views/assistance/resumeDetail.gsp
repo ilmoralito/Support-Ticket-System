@@ -24,7 +24,7 @@
             <tbody>
                 <g:each in="${byDepartments}" var="department">
                     <tr>
-                        <td colspan="6">${department.departments.join(", ")}</td>
+                        <td colspan="6"><b>${department.departments.join(", ")}</b></td>
                     </tr>
                     <g:each in="${department.users}" var="u">
                         <tr>

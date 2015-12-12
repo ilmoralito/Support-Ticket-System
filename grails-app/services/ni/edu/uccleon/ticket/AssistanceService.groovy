@@ -34,8 +34,6 @@ class AssistanceService {
             year(dateCreated) == y && month(dateCreated) == this.months.findIndexOf { it == m } + 1
         }.list()
 
-        println assistances.groupBy { it.user.departments } { it.user }
-
         List byDepartments = assistances.groupBy { it.user.departments } { it.user }.collect { a ->
             [
                 departments: a.key,

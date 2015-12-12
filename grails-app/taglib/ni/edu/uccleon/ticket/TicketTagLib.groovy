@@ -124,7 +124,7 @@ class TicketTagLib {
         String action = attrs.action
         Map params = attrs.params
         MarkupBuilder builder = new MarkupBuilder(out)
-        Map linkParams = [action: action, class: "button small right"]
+        Map linkParams = [action: action, class: "button right"]
         
         if (params) {
             linkParams.params = params
