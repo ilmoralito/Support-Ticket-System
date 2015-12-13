@@ -8,6 +8,7 @@ class AssistanceController {
     def springSecurityService
     def userService
     def assistanceService
+    DepartmentService departmentService
 
     static allowedMethods = [
         index: ["GET", "POST"],
@@ -279,7 +280,8 @@ class AssistanceController {
     @Secured(["ROLE_ADMIN"])
     def resumeDetail(Integer year, String month) {
         List byDepartments = assistanceService.getResumeDetail(year, month)
+        List departments = departmentService.departments
 
-        [byDepartments: byDepartments]
+        [byDepartments: byDepartments, departments: departments]
     }
 }
