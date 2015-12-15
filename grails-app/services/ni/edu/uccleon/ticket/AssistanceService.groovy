@@ -5,6 +5,7 @@ import static java.util.Calendar.*
 
 @Transactional
 class AssistanceService {
+    DepartmentService departmentService
 
     static private List getMonths() {
         [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]
@@ -30,21 +31,23 @@ class AssistanceService {
     }
 
     def getResumeDetail(Integer y, String m) {
-        List<Assistance> assistances = Assistance.where {
-            year(dateCreated) == y && month(dateCreated) == this.months.findIndexOf { it == m } + 1
-        }.list()
+        List departments = departmentService.departments
+        Map assistances = Assistance.findAll {
+            year(dateCreated) == y &&
+            month(dateCreated) == this.months.findIndexOf { it == m } + 1
+        }.groupBy { it.user.departments[0] }
 
-        List byDepartments = assistances.groupBy { it.user.departments } { it.user }.collect { a ->
+        List byDepartments = departments.collect { d ->
             [
-                departments: a.key,
-                users: a.value.collect { u ->
+                area: d.area,
+                departments: d.departments.collect { ds ->
                     [
-                        user: u.key.fullName,
-                        programmed: u.value.findAll { it.type == "PROGRAMMED" }.size(),
-                        nonscheduled: u.value.findAll { it.type == "NON-SCHEDULED" }.size(),
-                        pending: u.value.findAll { it.state == "PENDING" }.size(),
-                        process: u.value.findAll { it.state == "PROCESS" }.size(),
-                        closed: u.value.findAll { it.state == "CLOSED" }.size(),
+                        name: ds,
+                        programmed: assistances[ds] ? assistances[ds].count { it.type == "PROGRAMMED" } : 0,
+                        nonscheduled: assistances[ds] ? assistances[ds].count { it.type == "NON-SCHEDULED" } : 0,
+                        pending: assistances[ds] ? assistances[ds].count { it.state == "PENDING" } : 0,
+                        process: assistances[ds] ? assistances[ds].count { it.state == "PROCESS" } : 0,
+                        closed: assistances[ds] ? assistances[ds].count { it.state == "CLOSED" } : 0
                     ]
                 }
             ]

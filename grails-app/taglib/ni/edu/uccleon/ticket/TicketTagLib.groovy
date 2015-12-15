@@ -17,13 +17,12 @@ class TicketTagLib {
     def renderDepartments = { attrs ->
         List departments = departmentService.departments
         List departmentList = attrs.departmentList
-        Map departmentsNickname = [ Academic: "Academico", Administrative: "Administrativo" ]
         Map checkboxParams = [ type: "checkbox", name: "departments" ]
-        def mb = new MarkupBuilder(out)
+        MarkupBuilder mb = new MarkupBuilder(out)
 
         mb.div {
             departments.each { department ->
-                h6 { mb.yield departmentsNickname[department.area] }
+                h6 { mb.yield department.area }
 
                 div {
                     department.departments.each { d ->
