@@ -23,7 +23,8 @@ class AssistanceController {
         setOrUnsetDateCompleted: "GET",
         resume: "GET",
         printResume: "GET",
-        resumeDetail: "GET"
+        resumeDetail: "GET",
+        printResumeDetail: "GET"
     ]
 
     def index() {
@@ -282,5 +283,64 @@ class AssistanceController {
         List byDepartments = assistanceService.getResumeDetail(year, month)
 
         [byDepartments: byDepartments]
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def printResumeDetail(Integer year, String month) {
+        List byDepartments = assistanceService.getResumeDetail(year, month)
+        PdfDocumentBuilder pdfBuilder = new PdfDocumentBuilder(response.outputStream)
+        Closure customTemplate = {
+            "document" font: [ family: "Helvetica", size: 8.pt]
+            "cell.th" font: [bold: true, size: 5.pt]
+        }
+
+        pdfBuilder.create {
+            document (
+                template: customTemplate,
+                header: { info ->
+                    paragraph "Impreso: ${info.dateGenerated.format('yyyy-MM-dd hh:mm')}"
+                }
+            ) {
+                heading3 "DETALLE ${month?.toUpperCase()} ${year}..."
+
+                table(margin: [top: 0.inches, bottom: 0.inches]) {
+                    byDepartments.each { department ->
+                        row {
+                            cell department.area.toUpperCase(), style: "th"
+                            cell "PROGRAMADOS", style: "th"
+                            cell "NO PROGRAMADOS", style: "th"
+                            cell "PENDIENTES", style: "th"
+                            cell "PROCESO", style: "th"
+                            cell "CERRADO", style: "th"
+                        }
+
+                        department.departments.each { d ->
+                            row {
+                                cell d.name
+                                cell d.programmed
+                                cell d.nonscheduled
+                                cell d.pending
+                                cell d.process
+                                cell d.closed
+                            }
+                        }
+
+                        row {
+                            cell "TOTAL"
+                            cell department.departments.sum { it.programmed }
+                            cell department.departments.sum { it.nonscheduled }
+                            cell department.departments.sum { it.pending }
+                            cell department.departments.sum { it.process }
+                            cell department.departments.sum { it.closed }
+                        }
+                    }
+                }
+            }
+        }
+
+        response.contentType = "application/pdf"
+        response.setHeader("Content-disposition", "attachment;filename=caminito.pdf")
+        response.outputStream << out.toByteArray()
+        response.outputStream.flush()
     }
 }

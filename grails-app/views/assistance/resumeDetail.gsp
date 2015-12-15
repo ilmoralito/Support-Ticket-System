@@ -26,7 +26,11 @@
                     <g:each in="${department.departments}" var="d">
                         <tr id="${d}">
                             <td>
-                                <g:link params="${params}">${d.name}</g:link>
+                                <g:link
+                                    action="printResumeDetailByDepartment"
+                                    params="${params + [department: d.name]}">
+                                    ${d.name}
+                                </g:link>
                             </td>
                             <td>${d.programmed}</td>
                             <td>${d.nonscheduled}</td>
