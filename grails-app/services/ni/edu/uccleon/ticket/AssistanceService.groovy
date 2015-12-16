@@ -11,6 +11,19 @@ class AssistanceService {
         [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]
     }
 
+    static private Map getTypes() {
+        [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado" ]
+    }
+
+    def getByYearAndMonth(Integer y, String m) {
+        List assistances = Assistance.findAll {
+            year(dateCreated) == y &&
+            month(dateCreated) == this.months.findIndexOf { it == m } + 1
+        }
+
+        assistances
+    }
+
     def getResume() {
         List<Assistance> assistances = Assistance.list()
         List grouped = assistances.groupBy { it.dateCreated[YEAR] } { it.dateCreated[MONTH] } { it.type }.collect { a ->
@@ -32,10 +45,7 @@ class AssistanceService {
 
     def getResumeDetail(Integer y, String m) {
         List departments = departmentService.departments
-        Map assistances = Assistance.findAll {
-            year(dateCreated) == y &&
-            month(dateCreated) == this.months.findIndexOf { it == m } + 1
-        }.groupBy { it.user.departments[0] }
+        Map assistances = this.getByYearAndMonth(y, m).groupBy { it.user.departments[0] }
 
         List byDepartments = departments.collect { d ->
             [
@@ -54,5 +64,29 @@ class AssistanceService {
         }
 
         byDepartments
+    }
+
+    def getResumeDetailByDepartment(Integer y, String m, String department) {
+        Map assistances = this.getByYearAndMonth(y, m).findAll {
+            department in it.user.departments
+        }.groupBy { it.user }
+
+        List data = assistances.collect { d ->
+            [
+                user: d.key.fullName,
+                assistances: d.value.collect { a ->
+                    [
+                        dateCreated: a.dateCreated,
+                        lastUpdated: a.lastUpdated,
+                        attendedBy: a.attendedBy.user.fullName.join(", "),
+                        type: a.type,
+                        state: a.state,
+                        tags: a.tags.name.join(", ")
+                    ]
+                }
+            ]
+        }
+
+        data
     }
 }

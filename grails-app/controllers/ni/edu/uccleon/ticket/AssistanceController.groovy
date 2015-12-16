@@ -24,7 +24,8 @@ class AssistanceController {
         resume: "GET",
         printResume: "GET",
         resumeDetail: "GET",
-        printResumeDetail: "GET"
+        printResumeDetail: "GET",
+        printResumeDetailByDepartment: "GET"
     ]
 
     def index() {
@@ -340,6 +341,59 @@ class AssistanceController {
 
         response.contentType = "application/pdf"
         response.setHeader("Content-disposition", "attachment;filename=caminito.pdf")
+        response.outputStream << out.toByteArray()
+        response.outputStream.flush()
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def printResumeDetailByDepartment(Integer year, String month, String department) {
+        List assistances = assistanceService.getResumeDetailByDepartment(year, month, department)
+        PdfDocumentBuilder pdfBuilder = new PdfDocumentBuilder(response.outputStream)
+        Closure customTemplate = {
+            "document" font: [ family: "Helvetica", size: 8.pt]
+        }
+
+        pdfBuilder.create {
+            document (
+                template: customTemplate,
+                header: { info ->
+                    paragraph "Impreso: ${info.dateGenerated.format('yyyy-MM-dd hh:mm')}"
+                }
+            ) {
+                heading3 "DETALLE ${month.toUpperCase()} $year $department"
+
+                table(margin: [top: 0.inches, bottom: 0.inches]) {
+                    assistances.each { assistance ->
+                        row {
+                            cell assistance.user, colspan: 6
+                        }
+
+                        row {
+                            cell "Creado"
+                            cell "Actualizado"
+                            cell "Atendido por"
+                            cell "Tipo"
+                            cell "Estado"
+                            cell "Categoria"
+                        }
+
+                        assistance.assistances.each { a ->
+                            row {
+                                cell a.dateCreated.format("MM-dd")
+                                cell a.lastUpdated.format("MM-dd hh:mm")
+                                cell a.attendedBy
+                                cell assistanceService.types[a.type]
+                                cell ticket.state(state: a.state)
+                                cell a.tags
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        response.contentType = "application/pdf"
+        response.setHeader("Content-disposition", "attachment;filename=elDiaQueMeQuieras.pdf")
         response.outputStream << out.toByteArray()
         response.outputStream.flush()
     }

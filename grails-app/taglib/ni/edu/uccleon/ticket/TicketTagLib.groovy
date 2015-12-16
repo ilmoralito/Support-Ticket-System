@@ -3,8 +3,9 @@ package ni.edu.uccleon.ticket
 import groovy.xml.*
 
 class TicketTagLib {
-    def userService
-    def departmentService
+    UserService userService
+    DepartmentService departmentService
+    AssistanceService assistanceService
 
     static namespace = "ticket"
 
@@ -100,9 +101,9 @@ class TicketTagLib {
 
     def getAssistanceTypes = { attrs ->
         List types = attrs.types
-        def mb = new MarkupBuilder(out)
-        Map checkboxParams = [type: "checkbox", id: "PROGRAMMED", name: "types", value: "PROGRAMMED"]
-        Map assistanceTypeNicknames = [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado"]
+        MarkupBuilder mb = new MarkupBuilder(out)
+        Map checkboxParams = [ type: "checkbox", id: "PROGRAMMED", name: "types", value: "PROGRAMMED" ]
+        Map assistanceTypeNicknames = assistanceService.types
 
         if ("PROGRAMMED" in types) checkboxParams.checked = true
 
