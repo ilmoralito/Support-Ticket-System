@@ -6,6 +6,7 @@ import static java.util.Calendar.*
 @Transactional
 class AssistanceService {
     DepartmentService departmentService
+    TagService tagService
 
     static private List getMonths() {
         [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]
@@ -24,8 +25,12 @@ class AssistanceService {
         assistances
     }
 
+    def getAssistances() {
+        Assistance.list()
+    }
+
     def getResume() {
-        List<Assistance> assistances = Assistance.list()
+        List<Assistance> assistances = this.assistances
         List grouped = assistances.groupBy { it.dateCreated[YEAR] } { it.dateCreated[MONTH] } { it.type }.collect { a ->
             [
                 year: a.key,
@@ -88,5 +93,29 @@ class AssistanceService {
         }
 
         data
+    }
+
+    def getResumeByTag() {
+        Map assistances = this.assistances.groupBy { it.dateCreated[YEAR] } { it.dateCreated[MONTH] }
+        List tags = tagService.tags
+        List months = this.months
+        List byTags = assistances.collect { a ->
+            [
+                year: a.key,
+                months: months.collect { m ->
+                    [
+                        name: m,
+                        tags: tags.collect { t ->
+                            [
+                                name: t.name,
+                                count: a.value.find { it.key == months.indexOf(m) }?.value?.count { it.tags.name.contains(t.name) } ?: 0
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+        [byTags: byTags, tags: tags, months: months]
     }
 }

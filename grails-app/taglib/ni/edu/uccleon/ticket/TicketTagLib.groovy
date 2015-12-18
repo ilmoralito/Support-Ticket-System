@@ -6,6 +6,7 @@ class TicketTagLib {
     UserService userService
     DepartmentService departmentService
     AssistanceService assistanceService
+    TagService tagService
 
     static namespace = "ticket"
 
@@ -63,10 +64,10 @@ class TicketTagLib {
     }
 
     def getTags = { attrs ->
-        def tags = Tag.list()
-        def tagList = attrs.tagList
-        def checkboxParams = [type: "checkbox", name: "tags"]
-        def mb = new MarkupBuilder(out)
+        List tags = tagService.tags
+        List tagList = attrs.tagList
+        Map checkboxParams = [type: "checkbox", name: "tags"]
+        MarkupBuilder mb = new MarkupBuilder(out)
 
         mb.div {
             tags.each { tag ->

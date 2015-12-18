@@ -25,7 +25,8 @@ class AssistanceController {
         printResume: "GET",
         resumeDetail: "GET",
         printResumeDetail: "GET",
-        printResumeDetailByDepartment: "GET"
+        printResumeDetailByDepartment: "GET",
+        resumeByTag: "GET"
     ]
 
     def index() {
@@ -396,5 +397,10 @@ class AssistanceController {
         response.setHeader("Content-disposition", "attachment;filename=elDiaQueMeQuieras.pdf")
         response.outputStream << out.toByteArray()
         response.outputStream.flush()
+    }
+
+    @Secured(["ROLE_ADMIN"])
+    def resumeByTag() {
+        def (byTags, tags, months) = assistanceService.resumeByTag
     }
 }
