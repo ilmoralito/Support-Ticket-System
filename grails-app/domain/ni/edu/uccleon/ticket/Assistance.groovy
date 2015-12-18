@@ -4,7 +4,10 @@ import groovy.transform.ToString
 
 @ToString(cache=true, includeNames=true, includePackage=false)
 class Assistance {
+    def assistanceService
+
     String description
+    String department
     String state = "PENDING"
     String type
     Date dateCompleted
@@ -15,6 +18,9 @@ class Assistance {
 
     static constraints = {
         description blank: false, maxSize: 140
+        department blank: false, validator: { department, assistance ->
+            assistance.assistanceService.departmentInUserDepartments(department, assistance)
+        }
         state inList: ["PENDING", "PROCESS", "CLOSED"], maxSize: 140
         type inList: ["PROGRAMMED", "NON-SCHEDULED"], maxSize: 100
         dateCompleted nullable: true, validator: { dateCompleted, assistance ->
@@ -72,10 +78,7 @@ class Assistance {
             }
 
             if (departmentList) {
-                createAlias "user", "u"
-                createAlias "u.departments", "d"
-                
-                "in" "d.elements", departmentList
+                "in" "department", departmentList
             }
 
             if (tagList) {
@@ -101,6 +104,7 @@ class Assistance {
     static hasMany = [tags: Tag, tasks: Task, attendedBy: AttendedBy]
 
     def beforeValidate() {
+        department = user.departments[0]
         type = user.authorities.authority.contains("ROLE_ADMIN") ? "PROGRAMMED" : "NON-SCHEDULED"
     }
 

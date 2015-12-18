@@ -16,6 +16,10 @@ class AssistanceService {
         [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado" ]
     }
 
+    def departmentInUserDepartments(String department, Assistance assistance) {
+        department in assistance.user.departments
+    }
+
     def getByYearAndMonth(Integer y, String m) {
         List assistances = Assistance.findAll {
             year(dateCreated) == y &&
