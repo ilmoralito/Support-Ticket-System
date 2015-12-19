@@ -22,10 +22,20 @@
                       <section class="top-bar-section">
                         <ul class="right">
                             <sec:ifAllGranted roles="ROLE_ADMIN">
-                                <li class="${actionName in ['resume', 'resumeDetail'] ? 'active' : ''}">
-                                    <g:link action="resume">
-                                        Resumen
-                                    </g:link>
+                                <li class="has-dropdown">
+                                    <a href="#">Reportes</a>
+                                    <ul class="dropdown">
+                                        <li class="${controllerName == 'report' && actionName in ['resume', 'resumeDetail'] ? 'active' : ''}">
+                                            <g:link controller="report" action="resume">
+                                                Resumen
+                                            </g:link>
+                                        </li>
+                                        <li class="${controllerName == 'report' && actionName == 'resumeByTag' ? 'active' : ''}">
+                                            <g:link controller="report" action="resumeByTag">
+                                                Resumen por etiqueta
+                                            </g:link>
+                                        </li>
+                                    </ul>
                                 </li>
                                 </li>
                                 <li class="${controllerName == 'assistance' && actionName in ['application', 'binnacle'] ? 'active' : ''}">
@@ -35,7 +45,7 @@
                                     </g:link>
                                 </li>
                             </sec:ifAllGranted>
-                            <li class="${controllerName == 'assistance' && !(actionName in ['application', 'binnacle', 'resume', 'resumeDetail'])  ? 'active' : ''}">
+                            <li class="${controllerName == 'assistance' && !(actionName in ['application', 'binnacle'])  ? 'active' : ''}">
                                 <g:link controller="assistance">Asistencias</g:link>
                             </li>
                             <li class="has-dropdown">
