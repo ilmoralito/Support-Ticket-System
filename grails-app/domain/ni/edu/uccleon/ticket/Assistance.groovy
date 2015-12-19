@@ -25,15 +25,7 @@ class Assistance {
         type inList: ["PROGRAMMED", "NON-SCHEDULED"], maxSize: 100
         dateCompleted nullable: true, validator: { dateCompleted, assistance ->
             if (dateCompleted) {
-                def now = new Date().clearTime()
-                def validDate = dateCompleted >= now
-                def taskNotAttended = assistance?.tasks?.countBy { task ->
-                    task.status
-                }.containsKey(false)
-
-                if (!assistance.tasks || taskNotAttended || !assistance.tags || !validDate) {
-                    return "not.allowed"
-                }
+                assistance.assistanceService.validateDateCompleted(dateCompleted, assistance)
             }
         }
     }

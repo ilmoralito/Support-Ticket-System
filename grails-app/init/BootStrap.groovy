@@ -62,7 +62,6 @@ class BootStrap {
 		userUser.addToAssistances assistance3
 		assistance3.save failOnError: true
 
-
 		AttendedBy.create assistance3, admin1User
 		AttendedBy.create assistance3, admin2User
 
@@ -93,7 +92,7 @@ class BootStrap {
 
 		assert Assistance.count() == 5
 
-		// tag
+		// tags
 		def printer = new Tag(name:"Impresora").save failOnError: true
 		def battery = new Tag(name:"Bateria").save failOnError: true
 		def monitor = new Tag(name:"Monitor").save failOnError: true

@@ -16,8 +16,22 @@ class AssistanceService {
         [ PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado" ]
     }
 
-    def departmentInUserDepartments(String department, Assistance assistance) {
+    Boolean departmentInUserDepartments(String department, Assistance assistance) {
         department in assistance.user.departments
+    }
+
+    Boolean validateDateCompleted(Date dateCompleted, Assistance assistance) {
+        Date today = new Date().clearTime()
+        Boolean validDate = dateCompleted >= today
+        Boolean taskNotAttended = assistance?.tasks?.countBy { task ->
+            task?.status
+        }?.containsKey(false)
+
+        if (!assistance.tasks || taskNotAttended || !assistance.tags || !validDate) {
+            return false
+        }
+
+        true
     }
 
     def getByYearAndMonth(Integer y, String m) {
