@@ -104,14 +104,14 @@ class AssistanceController {
 
     @Secured(["ROLE_ADMIN"])
     def application() {
-        def assistances = {
+        Closure assistances = {
             if (request.method == "POST") {
-                def states = params.list("states")
-                def attendedBy = params.list("attendedBy")*.toLong()
-                def departments = params.list("departments")
-                def tags = params.list("tags")
-                def types = params.list("types")
-                def users = params.list("users")*.toLong()
+                List states = params.list("states")
+                List attendedBy = params.list("attendedBy")*.toLong()
+                List departments = params.list("departments")
+                List tags = params.list("tags")
+                List types = params.list("types")
+                List users = params.list("users")*.toLong()
 
                 Assistance.filter(states, attendedBy, departments, tags, types, users).list()
             } else {
@@ -119,7 +119,16 @@ class AssistanceController {
             }
         }
 
-        [assistances: assistances()?.groupBy { it.dateCreated.clearTime() }.collect { [dateCreated: it.key, assistances: it.value] }]
+        [
+            assistances: assistances()
+                .groupBy { it.dateCreated.clearTime() }
+                .collect { 
+                    [
+                        dateCreated: it.key,
+                        assistances: it.value
+                    ]
+                }
+        ]
     }
 
     @Secured(["ROLE_ADMIN"])
