@@ -104,19 +104,19 @@
         <g:render template="detail" model="[assistance: assistance]"/>
 
         <g:if test="${isAttendedByCurrentUser && assistance.state != 'CLOSED'}">
-            <div class="panel" id="listTag">
+            <div class="panel" id="tagList">
                 <h5>ETIQUETAS</h5>
 
                 <g:form action="addTags">
                     <g:hiddenField name="id" value="${assistance.id}"/>
                     <ticket:getTags tagList="${assistance?.tags?.name}"/>
                 
-                    <g:submitButton name="send" value="Agregar" class="button tiny expand" style="margin-bottom: 3px;"/>
+                    <g:submitButton name="send" value="Actualizar" class="button tiny expand" style="margin-bottom: 3px;"/>
                 </g:form>
             </div>
                 
             <div class="panel" id="createTag">
-                <g:form controller="tag" action="save">
+                <g:form controller="tag" action="save" autocomplete="off">
                     <g:hiddenField name="assistanceId" value="${assistance.id}"/>
                     <g:textField name="name" value="${tag?.name}" placeholder="Nueva etiqueta"/>
                 
