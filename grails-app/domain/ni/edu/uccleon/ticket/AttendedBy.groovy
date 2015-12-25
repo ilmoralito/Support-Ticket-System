@@ -4,7 +4,7 @@ import grails.gorm.DetachedCriteria
 import groovy.transform.ToString
 
 @ToString(cache=true, includeNames=true, includePackage=false)
-class AttendedBy {
+class AttendedBy implements Comparable {
     User user
 
     static constraints = {
@@ -43,6 +43,10 @@ class AttendedBy {
         Integer count = AttendedBy.where { assistance == assistance && user == user }.deleteAll()
 
         count
+    }
+
+    int compareTo(obj) {
+        user.email.compareTo(obj.user.email)
     }
 
     static belongsTo = [assistance: Assistance]

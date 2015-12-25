@@ -27,7 +27,7 @@
                         <tr id="${d}">
                             <td>
                                 <g:link
-                                    action="printResumeDetailByDepartment"
+                                    action="resumeDetailByDepartment"
                                     params="${params + [department: d.name]}">
                                     ${d.name}
                                 </g:link>

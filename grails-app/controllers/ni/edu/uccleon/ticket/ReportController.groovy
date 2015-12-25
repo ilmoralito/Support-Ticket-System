@@ -140,6 +140,12 @@ class ReportController {
         response.outputStream.flush()
     }
 
+    def resumeDetailByDepartment(Integer year, String month, String department) {
+        List assistances = assistanceService.getResumeDetailByDepartment(year, month, department)
+
+        [assistances: assistances]
+    }
+
     def printResumeDetailByDepartment(Integer year, String month, String department) {
         List assistances = assistanceService.getResumeDetailByDepartment(year, month, department)
         PdfDocumentBuilder pdfBuilder = new PdfDocumentBuilder(response.outputStream)
@@ -168,7 +174,7 @@ class ReportController {
                             cell "Atendido por"
                             cell "Tipo"
                             cell "Estado"
-                            cell "Categoria"
+                            cell "Etiquetas"
                         }
 
                         assistance.assistances.each { a ->

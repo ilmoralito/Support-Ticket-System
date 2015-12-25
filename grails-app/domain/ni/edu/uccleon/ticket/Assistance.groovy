@@ -12,6 +12,7 @@ class Assistance {
     String type
     Date dateCompleted
     SortedSet tags
+    SortedSet attendedBy
 
     Date dateCreated
     Date lastUpdated

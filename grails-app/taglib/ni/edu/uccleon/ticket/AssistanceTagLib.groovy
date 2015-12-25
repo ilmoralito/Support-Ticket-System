@@ -9,7 +9,7 @@ class AssistanceTagLib {
     static Asciidoctor asciidoctor = create();
 
     def dateCompletedStatus = { attrs ->
-        def status = attrs.status ? "ABRIR" : "CERRAR"
+        String status = attrs.status ? "ABRIR" : "CERRAR"
 
         out << status
     }
@@ -21,8 +21,14 @@ class AssistanceTagLib {
     }
 
     def getState = { attrs ->
-        def states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
+        Map states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
 
         out << states[attrs.state]
+    }
+
+    def getType = { attrs ->
+        Map types = [PROGRAMMED: "Programado", "NON-SCHEDULED": "No programado"]
+
+        out << types[attrs.type]
     }
 }
