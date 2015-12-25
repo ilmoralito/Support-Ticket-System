@@ -34,9 +34,9 @@
                                     <td>${assistance.user.fullName}</td>
                                     <td>${assistance.description}</td>
                                     <td>
-                                        <ticket:state state="${assistance.state}">
+                                        <assistance:getState state="${assistance.state}">
                                             ${assistance.state}
-                                        </ticket:state>
+                                        </assistance:getState>
                                     </td>
                                 </tr>
                             </g:each>

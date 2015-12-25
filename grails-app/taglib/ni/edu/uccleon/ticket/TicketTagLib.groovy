@@ -10,12 +10,6 @@ class TicketTagLib {
 
     static namespace = "ticket"
 
-    def state = { attrs ->
-        def states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
-
-        out << states[attrs.state]
-    }
-
     def renderDepartments = { attrs ->
         List departments = departmentService.departments
         List departmentList = attrs.departmentList

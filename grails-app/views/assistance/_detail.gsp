@@ -10,7 +10,7 @@
     </g:if>
 
     <h6>Estado</h6>
-    <p><ticket:state state="${assistance.state}"/></p>
+    <p><assistance:getState state="${assistance.state}"/></p>
 
     <h6>Solicitado</h6>
     <p>${assistance.dateCreated.format("yyyy-MM-dd")}</p>

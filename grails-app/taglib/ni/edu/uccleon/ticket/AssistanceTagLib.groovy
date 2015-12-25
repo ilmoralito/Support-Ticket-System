@@ -19,4 +19,10 @@ class AssistanceTagLib {
 
         out << asciidoctor.convert(description, new HashMap<String, Object>())
     }
+
+    def getState = { attrs ->
+        def states = [PENDING: "PENDIENTE", PROCESS: "PROCESO", CLOSED: "CERRADO"]
+
+        out << states[attrs.state]
+    }
 }

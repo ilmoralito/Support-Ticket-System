@@ -31,7 +31,7 @@
                                 <g:link action="edit" id="${a.id}">${a.id}</g:link>
                             </td>
                             <td>${a.description}</td>
-                            <td><ticket:state state="${a.state}"/></td>
+                            <td><assistance:getState state="${a.state}"/></td>
                             <td>${a.lastUpdated.format("yyyy-MM-dd")}</td>
                         </tr>
                     </g:each>
